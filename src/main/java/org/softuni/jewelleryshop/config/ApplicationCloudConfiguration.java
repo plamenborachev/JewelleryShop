@@ -17,8 +17,6 @@ public class ApplicationCloudConfiguration {
     @Value("${cloudinary.api-secret}")
     private String cloudApiSecret;
 
-//    alabala
-
     @Bean
     public Cloudinary cloudinary() {
         return new Cloudinary(new HashMap<String, Object>(){{
