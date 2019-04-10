@@ -6,11 +6,13 @@ import org.softuni.jewelleryshop.domain.entities.Product;
 import org.softuni.jewelleryshop.domain.models.service.ProductServiceModel;
 import org.softuni.jewelleryshop.error.ProductNameAlreadyExistsException;
 import org.softuni.jewelleryshop.error.ProductNotFoundException;
+import org.softuni.jewelleryshop.repository.OfferRepository;
 import org.softuni.jewelleryshop.repository.ProductRepository;
 import org.softuni.jewelleryshop.validation.ProductValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,9 +69,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceModel findProductById(String id) {
         return this.productRepository.findById(id)
                 .map(p -> {
-                    ProductServiceModel productServiceModel = this.modelMapper.map(p, ProductServiceModel.class);
-                    this.offerRepository.findByProduct_Id(productServiceModel.getId()).ifPresent(o -> productServiceModel.setPrice(o.getPrice()));
-
+                    ProductServiceModel productServiceModel = this.modelMapper
+                            .map(p, ProductServiceModel.class);
+                    this.offerRepository
+                            .findByProduct_Id(productServiceModel.getId())
+                            .ifPresent(o -> productServiceModel.setDiscountedPrice(o.getPrice()));
                     return productServiceModel;
                 })
                 .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
@@ -79,13 +83,6 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel) {
         Product product = this.productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
-
-        productServiceModel.setCategories(
-                this.categoryService.findAllCategories()
-                        .stream()
-                        .filter(c -> productServiceModel.getCategories().contains(c.getId()))
-                        .collect(Collectors.toList())
-        );
 
         product.setName(productServiceModel.getName());
         product.setDescription(productServiceModel.getDescription());
@@ -97,7 +94,14 @@ public class ProductServiceImpl implements ProductService {
                         .collect(Collectors.toList())
         );
 
-        return this.modelMapper.map(this.productRepository.saveAndFlush(product), ProductServiceModel.class);
+        this.offerRepository.findByProduct_Id(product.getId())
+                .ifPresent((o) -> {
+                    o.setPrice(product.getPrice().multiply(new BigDecimal(0.8)));
+                    this.offerRepository.save(o);
+                });
+
+        return this.modelMapper
+                .map(this.productRepository.saveAndFlush(product), ProductServiceModel.class);
     }
 
     @Override

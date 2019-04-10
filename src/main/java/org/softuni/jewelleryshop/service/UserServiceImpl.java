@@ -37,10 +37,8 @@ public class UserServiceImpl implements UserService {
             userServiceModel.setAuthorities(this.roleService.findAllRoles());
         } else {
             userServiceModel.setAuthorities(new LinkedHashSet<>());
-
             userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
         }
-
 
         User user = this.modelMapper.map(userServiceModel, User.class);
         user.setPassword(this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()));
@@ -71,7 +69,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Incorrect password!");
         }
 
-        user.setPassword(!"".equals(userServiceModel.getPassword()) ?
+        user.setPassword(userServiceModel.getPassword() != null ?
                 this.bCryptPasswordEncoder.encode(userServiceModel.getPassword()) :
                 user.getPassword());
         user.setEmail(userServiceModel.getEmail());

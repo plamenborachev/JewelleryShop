@@ -12,7 +12,6 @@ public class User extends BaseEntity implements UserDetails {
     private String username;
     private String password;
     private String email;
-
     private Set<Role> authorities;
 
     public User() {

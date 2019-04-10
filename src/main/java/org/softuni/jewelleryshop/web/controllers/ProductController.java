@@ -2,6 +2,7 @@ package org.softuni.jewelleryshop.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.jewelleryshop.domain.models.binding.ProductAddBindingModel;
+import org.softuni.jewelleryshop.domain.models.service.CategoryServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.ProductServiceModel;
 import org.softuni.jewelleryshop.domain.models.view.ProductAllViewModel;
 import org.softuni.jewelleryshop.domain.models.view.ProductDetailsViewModel;
@@ -58,31 +59,30 @@ public class ProductController extends BaseController {
         productServiceModel.setImageUrl(
                 this.cloudinaryService.uploadImage(model.getImage())
         );
-
         this.productService.createProduct(productServiceModel);
-
-        return super.redirect("/products/all");
+        return redirect("/products/all");
     }
 
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("All Products")
     public ModelAndView allProducts(ModelAndView modelAndView) {
-        modelAndView.addObject("products", this.productService.findAllProducts()
-                .stream()
-                .map(p -> this.modelMapper.map(p, ProductAllViewModel.class))
-                .collect(Collectors.toList()));
-
-        return super.view("product/all-products", modelAndView);
+        modelAndView.addObject("products",
+                this.productService.findAllProducts()
+                        .stream()
+                        .map(p -> this.modelMapper.map(p, ProductAllViewModel.class))
+                        .collect(Collectors.toList()));
+        return view("product/all-products", modelAndView);
     }
 
     @GetMapping("/details/{id}")
     @PreAuthorize("isAuthenticated()")
     @PageTitle("Product Details")
     public ModelAndView detailsProduct(@PathVariable String id, ModelAndView modelAndView) {
-        modelAndView.addObject("product", this.modelMapper.map(this.productService.findProductById(id), ProductDetailsViewModel.class));
-
-        return super.view("product/details", modelAndView);
+        ProductDetailsViewModel model = this.modelMapper
+                .map(this.productService.findProductById(id), ProductDetailsViewModel.class);
+        modelAndView.addObject("product", model);
+        return view("product/details", modelAndView);
     }
 
     @GetMapping("/edit/{id}")
@@ -95,16 +95,20 @@ public class ProductController extends BaseController {
 
         modelAndView.addObject("product", model);
         modelAndView.addObject("productId", id);
-
-        return super.view("product/edit-product", modelAndView);
+        return view("product/edit-product", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editProductConfirm(@PathVariable String id, @ModelAttribute ProductAddBindingModel model) {
-        this.productService.editProduct(id, this.modelMapper.map(model, ProductServiceModel.class));
-
-        return super.redirect("/products/details/" + id);
+    public ModelAndView editProductConfirm(@PathVariable String id,
+                                           @ModelAttribute ProductAddBindingModel model) {
+        ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
+        productServiceModel.setCategories(model.getCategories().stream()
+                .map(c -> this.modelMapper
+                        .map(this.categoryService.findCategoryById(c), CategoryServiceModel.class))
+                .collect(Collectors.toList()));
+        this.productService.editProduct(id, productServiceModel);
+        return redirect("/products/details/" + id);
     }
 
     @GetMapping("/delete/{id}")
@@ -118,21 +122,20 @@ public class ProductController extends BaseController {
         modelAndView.addObject("product", model);
         modelAndView.addObject("productId", id);
 
-        return super.view("product/delete-product", modelAndView);
+        return view("product/delete-product", modelAndView);
     }
 
     @PostMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView deleteProductConfirm(@PathVariable String id) {
         this.productService.deleteProduct(id);
-
-        return super.redirect("/products/all");
+        return redirect("/products/all");
     }
 
     @GetMapping("/fetch/{category}")
     @ResponseBody
     public List<ProductAllViewModel> fetchByCategory(@PathVariable String category) {
-        if(category.equals("all")) {
+        if (category.equals("all")) {
             return this.productService.findAllProducts()
                     .stream()
                     .map(product -> this.modelMapper.map(product, ProductAllViewModel.class))
@@ -150,7 +153,6 @@ public class ProductController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("message", e.getMessage());
         modelAndView.addObject("statusCode", e.getStatusCode());
-
         return modelAndView;
     }
 
@@ -159,7 +161,6 @@ public class ProductController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("message", e.getMessage());
         modelAndView.addObject("statusCode", e.getStatusCode());
-
         return modelAndView;
     }
 }

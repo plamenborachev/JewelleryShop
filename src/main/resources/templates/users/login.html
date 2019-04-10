@@ -9,9 +9,10 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <h1 class="text-center text-dark">Register</h1>
+    <h1 class="text-center text-dark">Login</h1>
     <hr class="hr-2 bg-dark w-25">
-    <form class="form w-25 mx-auto" th:action="@{/users/register}" th:method="post"><input type="hidden" name="_csrf" value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
+    <form class="form w-25 mx-auto" th:action="@{/users/login}" method="post"><input type="hidden" name="_csrf"
+                                                                                     value="c95ccb2b-1afa-47bd-bf7b-a5b72739470b">
         <div class="form-group">
             <label for="username" class="font-weight-bold">Username</label>
             <input type="text" class="form-control" id="username" placeholder="Username..." name="username">
@@ -20,21 +21,25 @@
             <label for="password" class="font-weight-bold">Password</label>
             <input type="password" class="form-control" id="password" placeholder="Password..." name="password">
         </div>
-        <div class="form-group">
-            <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
-            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..." name="confirmPassword">
-        </div>
-        <div class="form-group">
-            <label for="email" class="font-weight-bold">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Email..." name="email">
-        </div>
         <hr class="hr-2 bg-dark">
         <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Register</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </div>
     </form>
+    <th:block th:if="${param.error}">
+        <div class="alert alert-dismissible alert-danger w-25 mx-auto mt-3 text-center">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Invalid username/password!</strong>
+        </div>
+    </th:block>
+    <th:block th:if="${param.logout}">
+        <div class="alert alert-dismissible alert-info w-25 mx-auto mt-3 text-center">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Successful logout</strong>
+        </div>
+    </th:block>
 </main>
-<footer>
+<footer class="fixed-bottom">
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
 </body>

@@ -1,6 +1,9 @@
 /**{*/
 /*    font-family: Verdana, monospace;*/
 /*}*/
+body {
+    padding-top: 70px;
+}
 
 hr.hr-2 {
     height: 2px;

@@ -37,26 +37,24 @@ public class UserController extends BaseController {
     @PreAuthorize("isAnonymous()")
     @PageTitle("Register")
     public ModelAndView register() {
-        return super.view("register");
+        return view("/users/register");
     }
 
     @PostMapping("/register")
     @PreAuthorize("isAnonymous()")
     public ModelAndView registerConfirm(@ModelAttribute UserRegisterBindingModel model) {
         if (!model.getPassword().equals(model.getConfirmPassword())) {
-            return super.view("register");
+            return view("/users/register");
         }
-
         this.userService.registerUser(this.modelMapper.map(model, UserServiceModel.class));
-
-        return super.redirect("/login");
+        return redirect("/users/login");
     }
 
     @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
     @PageTitle("Login")
     public ModelAndView login() {
-        return super.view("login");
+        return view("/users/login");
     }
 
     @GetMapping("/profile")
@@ -64,9 +62,9 @@ public class UserController extends BaseController {
     @PageTitle("Profile")
     public ModelAndView profile(Principal principal, ModelAndView modelAndView) {
         modelAndView
-                .addObject("model", this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
-
-        return super.view("profile", modelAndView);
+                .addObject("model", this.modelMapper
+                        .map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
+        return view("/users/profile", modelAndView);
     }
 
     @GetMapping("/edit")
@@ -76,19 +74,21 @@ public class UserController extends BaseController {
         modelAndView
                 .addObject("model", this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
 
-        return super.view("edit-profile", modelAndView);
+        return view("/users/edit-profile", modelAndView);
     }
 
     @PatchMapping("/edit")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView editProfileConfirm(@ModelAttribute UserEditBindingModel model) {
-        if (!model.getPassword().equals(model.getConfirmPassword())) {
-            return super.view("edit-profile");
+    public ModelAndView editProfileConfirm(@ModelAttribute UserEditBindingModel model,
+                                           ModelAndView modelAndView) {
+        if (model.getPassword() != null && !model.getPassword().equals(model.getConfirmPassword())) {
+            modelAndView.addObject("model", this.modelMapper.map(model, UserProfileViewModel.class));
+            return view("/users/edit-profile", modelAndView);
         }
 
         this.userService.editUserProfile(this.modelMapper.map(model, UserServiceModel.class), model.getOldPassword());
 
-        return super.redirect("/users/profile");
+        return redirect("/users/profile");
     }
 
     @GetMapping("/all")
@@ -107,31 +107,28 @@ public class UserController extends BaseController {
 
         modelAndView.addObject("users", users);
 
-        return super.view("all-users", modelAndView);
+        return view("/users/all-users", modelAndView);
     }
 
     @PostMapping("/set-user/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView setUser(@PathVariable String id) {
         this.userService.setUserRole(id, "user");
-
-        return super.redirect("/users/all");
+        return redirect("/users/all");
     }
 
     @PostMapping("/set-moderator/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView setModerator(@PathVariable String id) {
         this.userService.setUserRole(id, "moderator");
-
-        return super.redirect("/users/all");
+        return redirect("/users/all");
     }
 
     @PostMapping("/set-admin/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ModelAndView setAdmin(@PathVariable String id) {
         this.userService.setUserRole(id, "admin");
-
-        return super.redirect("/users/all");
+        return redirect("/users/all");
     }
 
     @InitBinder
