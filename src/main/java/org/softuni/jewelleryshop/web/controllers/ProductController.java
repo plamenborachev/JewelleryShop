@@ -11,10 +11,13 @@ import org.softuni.jewelleryshop.error.ProductNotFoundException;
 import org.softuni.jewelleryshop.service.CategoryService;
 import org.softuni.jewelleryshop.service.CloudinaryService;
 import org.softuni.jewelleryshop.service.ProductService;
+import org.softuni.jewelleryshop.validation.ProductAddValidator;
+import org.softuni.jewelleryshop.validation.implementations.ProductEditValidator;
 import org.softuni.jewelleryshop.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,27 +32,45 @@ public class ProductController extends BaseController {
     private final ProductService productService;
     private final CloudinaryService cloudinaryService;
     private final CategoryService categoryService;
+    private final ProductAddValidator addValidator;
+    private final ProductEditValidator editValidator;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProductController(ProductService productService, CloudinaryService cloudinaryService, CategoryService categoryService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService,
+                             CloudinaryService cloudinaryService,
+                             CategoryService categoryService,
+                             ProductAddValidator addValidator,
+                             ProductEditValidator editValidator, ModelMapper modelMapper) {
         this.productService = productService;
         this.cloudinaryService = cloudinaryService;
         this.categoryService = categoryService;
+        this.addValidator = addValidator;
+        this.editValidator = editValidator;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Product")
-    public ModelAndView addProduct() {
-        return super.view("product/add-product");
+    public ModelAndView addProduct(ModelAndView modelAndView,
+                                   @ModelAttribute(name = "model") ProductAddBindingModel model) {
+        modelAndView.addObject("model", model);
+        return view("product/add-product");
     }
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView addProductConfirm(@ModelAttribute ProductAddBindingModel model) throws IOException {
-        ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
+    public ModelAndView addProductConfirm(ModelAndView modelAndView,
+                                          @ModelAttribute(name = "model") ProductAddBindingModel model,
+                                          BindingResult bindingResult) throws IOException {
+        this.addValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("model", model);
+            return view("product/add-product", modelAndView);
+        }
+        ProductServiceModel productServiceModel = this.modelMapper
+                                                        .map(model, ProductServiceModel.class);
         productServiceModel.setCategories(
                 this.categoryService.findAllCategories()
                         .stream()
@@ -88,22 +109,38 @@ public class ProductController extends BaseController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Edit Product")
-    public ModelAndView editProduct(@PathVariable String id, ModelAndView modelAndView) {
+    public ModelAndView editProduct(@PathVariable String id,
+                                    ModelAndView modelAndView,
+                                    @ModelAttribute(name = "model") ProductAddBindingModel model) {
         ProductServiceModel productServiceModel = this.productService.findProductById(id);
-        ProductAddBindingModel model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
-        model.setCategories(productServiceModel.getCategories().stream().map(c -> c.getName()).collect(Collectors.toList()));
+        model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
+        model.setCategories(productServiceModel
+                .getCategories()
+                .stream()
+                .map(CategoryServiceModel::getName)
+                .collect(Collectors.toList()));
 
-        modelAndView.addObject("product", model);
         modelAndView.addObject("productId", id);
+        modelAndView.addObject("product", model);
         return view("product/edit-product", modelAndView);
     }
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     public ModelAndView editProductConfirm(@PathVariable String id,
-                                           @ModelAttribute ProductAddBindingModel model) {
+                                           ModelAndView modelAndView,
+                                           @ModelAttribute (name = "model") ProductAddBindingModel model,
+                                           BindingResult bindingResult) {
+        this.editValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject("productId", id);
+            modelAndView.addObject("product", model);
+            return view("product/edit-product", modelAndView);
+        }
+
         ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
-        productServiceModel.setCategories(model.getCategories().stream()
+        productServiceModel.setCategories(model.getCategories()
+                .stream()
                 .map(c -> this.modelMapper
                         .map(this.categoryService.findCategoryById(c), CategoryServiceModel.class))
                 .collect(Collectors.toList()));

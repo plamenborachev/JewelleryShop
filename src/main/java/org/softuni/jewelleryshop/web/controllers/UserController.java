@@ -72,8 +72,9 @@ public class UserController extends BaseController {
     @PageTitle("Edit Profile")
     public ModelAndView editProfile(Principal principal, ModelAndView modelAndView) {
         modelAndView
-                .addObject("model", this.modelMapper.map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
-
+                .addObject("model", this.modelMapper
+                        .map(this.userService
+                                .findUserByUserName(principal.getName()), UserProfileViewModel.class));
         return view("/users/edit-profile", modelAndView);
     }
 

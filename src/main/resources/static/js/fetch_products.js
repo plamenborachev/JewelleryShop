@@ -15,7 +15,6 @@ $(document).ready(function () {
         .then((response) => response.json())
         .then((json) => {
             $('.products-data').empty();
-
             if (json.length === 0) {
                 $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the ${category} category.</h3>`)
             } else {

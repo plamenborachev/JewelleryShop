@@ -1,5 +1,6 @@
 package org.softuni.jewelleryshop.validation;
 
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.models.binding.CategoryAddBindingModel;
 import org.softuni.jewelleryshop.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +25,25 @@ public class CategoryAddValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
+
         CategoryAddBindingModel categoryAddBindingModel = (CategoryAddBindingModel) o;
 
-        if (categoryAddBindingModel.getName() == null) {
-            errors.rejectValue("name", "Name cannot be Null!", "Name cannot be Null!");
+        if (categoryAddBindingModel.getName() == null || categoryAddBindingModel.getName().equals("")) {
+            errors.rejectValue("name",
+                    GlobalConstants.CATEGORY_NAME_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE,
+                    GlobalConstants.CATEGORY_NAME_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE);
         }
 
-        if (categoryAddBindingModel.getName().equals("")) {
-            errors.rejectValue("name", "Name cannot be Empty!", "Name cannot be Empty!");
-        }
-
-        if (categoryAddBindingModel.getName().length() < 3) {
-            errors.rejectValue("name", "Name must contain at least 3 characters!", "Name must contain at least 3 characters!");
+        if (categoryAddBindingModel.getName().length() < GlobalConstants.CATEGORY_NAME_MIN_LENGTH
+                || categoryAddBindingModel.getName().length() > GlobalConstants.CATEGORY_NAME_MAX_LENGTH) {
+            errors.rejectValue("name",
+                    GlobalConstants.CATEGORY_NAME_LENGTH_VALIDATION_MESSAGE,
+                    GlobalConstants.CATEGORY_NAME_LENGTH_VALIDATION_MESSAGE);
         }
 
         this.categoryRepository.findByName(categoryAddBindingModel.getName())
-                .ifPresent((c) -> errors.rejectValue("name", "Category already exists!", "Category already exists!"));
+                .ifPresent((c) -> errors.rejectValue("name",
+                        GlobalConstants.CATEGORY_EXISTS_VALIDATION_MESSAGE,
+                        GlobalConstants.CATEGORY_EXISTS_VALIDATION_MESSAGE));
     }
 }

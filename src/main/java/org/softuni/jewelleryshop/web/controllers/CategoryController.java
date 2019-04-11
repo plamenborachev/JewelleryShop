@@ -38,7 +38,8 @@ public class CategoryController extends BaseController {
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Add Category")
-    public ModelAndView addCategory(ModelAndView modelAndView, @ModelAttribute(name = "model") CategoryAddBindingModel model) {
+    public ModelAndView addCategory(ModelAndView modelAndView,
+                                    @ModelAttribute(name = "model") CategoryAddBindingModel model) {
         modelAndView.addObject("model", model);
         return view("category/add-category", modelAndView);
     }
@@ -86,7 +87,8 @@ public class CategoryController extends BaseController {
 
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editCategoryConfirm(@PathVariable String id, ModelAndView modelAndView,
+    public ModelAndView editCategoryConfirm(@PathVariable String id,
+                                            ModelAndView modelAndView,
                                             @ModelAttribute(name = "model") CategoryAddBindingModel model,
                                             BindingResult bindingResult) {
         this.editValidator.validate(model, bindingResult);
