@@ -12,11 +12,8 @@
     <h1 class="text-center text-dark">Something Went Wrong :-(</h1>
     <hr class="hr-2 bg-dark ">
     <div class="text-center">
-        <h3 th:text="${message}" class="text-danger"></h3>
+        <h3 th:utext="${message}" class="text-danger"></h3>
     </div>
-<!--    <div class="text-center" >-->
-<!--        <img th:src="'https://http.cat/' + ${statusCode}" alt="Cat">-->
-<!--    </div>-->
 </main>
 <footer class="fixed-bottom">
     <th:block th:include="~{fragments/footer}"></th:block>

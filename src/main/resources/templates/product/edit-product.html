@@ -9,7 +9,7 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <h1 class="text-center text-dark">Edit Product</h1>
+    <h1 class="text-center text-dark">Edit Jewellery</h1>
     <hr class="hr-2 bg-dark w-25">
     <form id="add-product-form" class="form w-25 mx-auto" th:action="@{/products/edit/{id}(id=${productId})}"
           method="post" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
         <div class="form-group">
             <label for="add-product-description" class="font-weight-bold">Description</label>
             <textarea class="form-control" name="description" id="add-product-description" rows="5"
-                      th:text="${product.description}"></textarea>
+                      th:utext="${product.description}"></textarea>
         </div>
         <div class="form-group">
             <label for="add-product-price" class="font-weight-bold">Price</label>
@@ -37,7 +37,7 @@
         </div>
         <hr class="hr-2 bg-dark w-25">
         <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn btn-success">Edit Product</button>
+            <button type="submit" class="btn btn-success">Edit Jewellery</button>
         </div>
     </form>
 </main>

@@ -47,11 +47,11 @@
                                 <th:block th:each="item : ${#session.getAttribute('shopping-cart')}"
                                           th:object="${item}">
                                     <div class="dropdown-item"
-                                         th:text="|*{product.product.name} x *{quantity}|"></div>
+                                         th:utext="|*{product.product.name} x *{quantity}|"></div>
                                 </th:block>
                                 <div class="dropdown-divider"></div>
                                 <div class="text-center">
-                                    <a th:href="@{/cart/details}" class="btn btn-dark">Cart</a>
+                                    <a th:href="@{/cart/details}" class="btn btn-secondary">Cart</a>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         <a class="nav-link" th:href="@{/orders/my}">My Orders</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" th:href="@{/users/profile}" th:text="Profile"></a>
+                        <a class="nav-link" th:href="@{/users/profile}" th:utext="Profile"></a>
                     </li>
                     <th:block sec:authorize="hasRole('ROLE_MODERATOR')">
                         <li class="nav-item active">
@@ -75,10 +75,10 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="moderatorDropdown">
                                     <a class="dropdown-item" th:href="@{/categories/add}">Add Category</a>
-                                    <a class="dropdown-item" th:href="@{/products/add}">Add Product</a>
+                                    <a class="dropdown-item" th:href="@{/products/add}">Add Jewellery</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" th:href="@{/categories/all}">All Categories</a>
-                                    <a class="dropdown-item" th:href="@{/products/all}">All Products</a>
+                                    <a class="dropdown-item" th:href="@{/products/all}">All Jewelleries</a>
                                 </div>
                             </div>
                         </li>
@@ -101,7 +101,7 @@
                     <li class="nav-item active">
                         <form action="/logout?login" method="post">
                             <!--                            <button class="logout-button nav-link">Logout</button>-->
-                            <button type="submit" class="btn btn-danger">Logout</button>
+                            <button type="submit" class="btn btn-danger font-weight-bold">Logout</button>
                         </form>
                     </li>
                 </ul>

@@ -1,10 +1,10 @@
 function formatProduct(product) {
-    return '<div class="product">'
+    return '<div class="product data col-md-3">'
         + '<div class="text-center">'
         + `<a href="/products/details/${product.id}"><img src="${product.imageUrl}" class="product-image-home img-thumbnail px-auto" alt="Image not loaded..." height="200"></a>`
         + '</div>'
-        + `<h4 class="text-center font-weight-bold mt-3">${product.name}</h4>`
-        + `<h5 class="text-center font-weight-bold">${product.price.toFixed(2)}&euro;</h5>`
+        + `<h5 class="text-center font-weight-bold mt-3">${product.name}</h5>`
+        + `<h6 class="text-center font-weight-bold">${product.price.toFixed(2)}&euro;</h6>`
         + '</div>'
 }
 
@@ -17,7 +17,7 @@ $(document).ready(function () {
             $('.products-data').empty();
 
             if (json.length === 0) {
-                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no products in the ${category} category.</h3>`)
+                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the ${category} category.</h3>`)
             } else {
                 for (let i = 0; i < json.length; i += 3) {
                     $('.products-data').append('<div class="products-row row d-flex justify-content-around mt-5">');
@@ -38,7 +38,7 @@ $('input[type=radio][name=selection]').change(function () {
             $('.products-data').empty();
 
             if (json.length === 0) {
-                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no products in the "${category}" category.</h3>`)
+                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the "${category}" category.</h3>`)
             } else {
                 for (let i = 0; i < json.length; i += 3) {
                     $('.products-data').append('<div class="products-row row d-flex justify-content-around mt-5">');

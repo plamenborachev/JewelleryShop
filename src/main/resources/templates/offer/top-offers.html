@@ -9,12 +9,15 @@
 </header>
 <main class="mt-3">
     <div class="row d-flex justify-content-between mx-0">
+
         <div class="data col-md-10">
-            <h1 class="text-center font-weight-bold">Products On Sale</h1>
-            <div class="products-data"></div>
+            <h1 class="text-center font-weight-bold">On Sale</h1>
+            <div class="products-data">
+
+            </div>
         </div>
+
         <div class="products-navigation col-md-2">
-            <h2 class="font-weight-bold">Categories</h2>
             <form class="mt-3">
                 <div class="custom-control custom-radio mt-3">
                     <input type="radio" id="allRadio" name="selection"
@@ -28,14 +31,15 @@
                                class="custom-control-input"
                                th:value="*{name}">
                         <label class="h4 custom-control-label" th:for="|*{name.toLowerCase()}Radio|"
-                               th:text="*{name}"></label>
+                               th:utext="*{name}"></label>
                     </div>
                 </th:block>
             </form>
         </div>
+
     </div>
 </main>
-<footer>
+<footer class="fixed-bottom">
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
 

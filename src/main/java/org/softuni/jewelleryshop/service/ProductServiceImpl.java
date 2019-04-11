@@ -106,8 +106,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(String id) {
-        Product product = this.productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
-
+        Product product = this.productRepository
+                .findById(id)
+                .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
         this.productRepository.delete(product);
     }
 

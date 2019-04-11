@@ -26,10 +26,10 @@
                     <td class="col-md-2 text-center">
                         <img th:src="*{product.product.imageUrl}" alt="Product" height="150">
                     </td>
-                    <td class="col-md-3 text-center" th:text="*{product.product.name}"></td>
-                    <td class="col-md-2 text-center" th:text="*{product.product.description}"></td>
-                    <td class="col-md-2 text-center" th:text="|*{product.price}| + &euro;" ></td>
-                    <td class="col-md-1 text-center" th:text="*{quantity}"></td>
+                    <td class="col-md-3 text-center" th:utext="*{product.product.name}"></td>
+                    <td class="col-md-2 text-center" th:utext="*{product.product.description}"></td>
+                    <td class="col-md-2 text-center" th:utext="|*{product.price}| + &euro;" ></td>
+                    <td class="col-md-1 text-center" th:utext="*{quantity}"></td>
                     <td class="col-md-2 text-center">
                         <form th:action="@{/cart/remove-product}" th:method="delete">
                             <div class="button-holder d-flex justify-content-center">
@@ -44,17 +44,18 @@
         </table>
         <hr class="hr-2 bg-dark">
         <div class="text-center">
-            <h3 th:text="|Total: ${totalPrice}| + &euro;"></h3>
+            <h3 th:utext="|Total: ${totalPrice}| + &euro;"></h3>
         </div>
         <form th:action="@{/cart/checkout}" th:method="post">
             <div class="button-holder d-flex justify-content-center">
-                <button type="submit" class="btn btn-success">Checkout</button>
+                <button type="submit" class="btn btn-secondary">Checkout</button>
             </div>
         </form>
     </main>
-    <footer class="fixed-bottom">
-        <th:block th:include="~{fragments/footer}"></th:block>
-    </footer>
+
 </div>
+<footer class="fixed-bottom">
+    <th:block th:include="~{fragments/footer}"></th:block>
+</footer>
 </body>
 </html>
