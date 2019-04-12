@@ -9,10 +9,20 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <h1 class="text-center text-dark">Something Went Wrong :-(</h1>
-    <hr class="hr-2 bg-dark ">
-    <div class="text-center">
-        <h3 th:utext="${message}" class="text-danger"></h3>
+    <div class="jumbotron bg-light text-center">
+        <h1 class="text-center text-danger font-weight-bolder">
+            <i class="fas fa-skull-crossbones"></i>
+            OOPS!
+            <i class="fas fa-skull-crossbones"></i>
+        </h1>
+
+        <hr class="hr-2 bg-primary">
+
+        <div class="text-center">
+            <h3 th:utext="${message}" class="text-danger"></h3>
+        </div>
+
+        <input class="btn btn-primary" type="button" onclick="history.go(-1);" th:value="Back"/>
     </div>
 </main>
 <footer class="fixed-bottom">

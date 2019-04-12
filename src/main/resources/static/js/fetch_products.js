@@ -5,6 +5,7 @@ $(document).ready(function () {
         .then((response) => response.json())
         .then((json) => {
             $('.products-data').empty();
+
             if (json.length === 0) {
                 $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the ${category} category.</h3>`)
             } else {
@@ -40,11 +41,11 @@ $('input[type=radio][name=selection]').change(function () {
 });
 
 function formatProduct(product) {
-    return '<div class="product data col-md-3">'
-        + '<div class="text-center">'
-        + `<a href="/products/details/${product.id}"><img src="${product.imageUrl}" class="product-image-home img-thumbnail px-auto" alt="Image not loaded..." height="200"></a>`
-        + '</div>'
-        + `<h5 class="text-center font-weight-bold mt-3">${product.name}</h5>`
-        + `<h6 class="text-center font-weight-bold">${product.price.toFixed(2)}&euro;</h6>`
+    return '<div class="product data col-md-3 text-center">'
+                // +  '<div class="text-center">'
+                    + `<a href="/products/details/${product.id}"><img src="${product.imageUrl}" class="product-image-home img-thumbnail" alt="Image not loaded..."></a>`
+                // + '</div>'
+            + `<h5 class="text-center font-weight-bold mt-3">${product.name}</h5>`
+            + `<h6 class="text-center font-weight-bold">${product.price.toFixed(2)}&euro;</h6>`
         + '</div>'
 }

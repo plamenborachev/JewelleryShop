@@ -46,12 +46,22 @@ public class CartController extends BaseController {
 
     @PostMapping("/add-product")
     @PreAuthorize("isAuthenticated()")
-    public ModelAndView addToCartConfirm(String id, int quantity, HttpSession session) {
+    public ModelAndView addToCartConfirm(String id, Integer quantity, HttpSession session) {
+
+        if (quantity == null){
+            throw new IllegalArgumentException("You have to choose quantity first!");
+        }
+
+        if (quantity <= 0){
+            throw new IllegalArgumentException("You have to choose positive quantity!");
+        }
+
         ProductDetailsViewModel product = this.modelMapper
                 .map(this.productService.findProductById(id), ProductDetailsViewModel.class);
 
         OrderProductViewModel orderProductViewModel = new OrderProductViewModel();
         orderProductViewModel.setProduct(product);
+
         if (product.getDiscountedPrice() != null){
             orderProductViewModel.setPrice(product.getDiscountedPrice());
         } else {
@@ -88,15 +98,18 @@ public class CartController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView checkoutConfirm(HttpSession session, Principal principal) {
         var cart = this.retrieveCart(session);
-
         OrderServiceModel orderServiceModel = this.prepareOrder(cart, principal.getName());
+
+        if (orderServiceModel.getProducts().isEmpty()){
+            throw new IllegalArgumentException("The cart is empty!");
+        }
+
         this.orderService.createOrder(orderServiceModel);
         return redirect("/home");
     }
 
     private List<ShoppingCartItem> retrieveCart(HttpSession session) {
         this.initCart(session);
-
         return (List<ShoppingCartItem>) session.getAttribute("shopping-cart");
     }
 
@@ -141,7 +154,6 @@ public class CartController extends BaseController {
         }
         orderServiceModel.setProducts(products);
         orderServiceModel.setTotalPrice(this.calcTotal(cart));
-
         return orderServiceModel;
     }
 }

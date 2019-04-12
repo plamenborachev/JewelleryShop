@@ -56,7 +56,7 @@ public class ProductController extends BaseController {
     public ModelAndView addProduct(ModelAndView modelAndView,
                                    @ModelAttribute(name = "model") ProductAddBindingModel model) {
         modelAndView.addObject("model", model);
-        return view("product/add-product");
+        return view("product/add-product", modelAndView);
     }
 
     @PostMapping("/add")
@@ -84,6 +84,51 @@ public class ProductController extends BaseController {
         return redirect("/products/all");
     }
 
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    @PageTitle("Edit Product")
+    public ModelAndView editProduct(@PathVariable String id,
+                                    ModelAndView modelAndView,
+                                    @ModelAttribute(name = "model") ProductAddBindingModel model) {
+        ProductServiceModel productServiceModel = this.productService.findProductById(id);
+        model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
+        model.setCategories(productServiceModel
+                .getCategories()
+                .stream()
+                .map(CategoryServiceModel::getName)
+                .collect(Collectors.toList()));
+        modelAndView.addObject("productId", id);
+        modelAndView.addObject("model", model);
+        return view("product/edit-product", modelAndView);
+    }
+
+    @PostMapping("/edit/{id}")
+    @PreAuthorize("hasRole('ROLE_MODERATOR')")
+    public ModelAndView editProductConfirm(@PathVariable String id,
+                                           ModelAndView modelAndView,
+                                           @ModelAttribute (name = "model") ProductAddBindingModel model,
+                                           BindingResult bindingResult) {
+        this.editValidator.validate(model, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.setCategories(model
+                    .getCategories()
+                    .stream()
+                    .map(c -> this.categoryService.findCategoryById(c).getName())
+                    .collect(Collectors.toList()));
+            modelAndView.addObject("productId", id);
+            modelAndView.addObject("model", model);
+            return view("product/edit-product", modelAndView);
+        }
+        ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
+        productServiceModel.setCategories(model.getCategories()
+                .stream()
+                .map(c -> this.modelMapper
+                        .map(this.categoryService.findCategoryById(c), CategoryServiceModel.class))
+                .collect(Collectors.toList()));
+        this.productService.editProduct(id, productServiceModel);
+        return redirect("/products/details/" + id);
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("All Products")
@@ -106,59 +151,18 @@ public class ProductController extends BaseController {
         return view("product/details", modelAndView);
     }
 
-    @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    @PageTitle("Edit Product")
-    public ModelAndView editProduct(@PathVariable String id,
-                                    ModelAndView modelAndView,
-                                    @ModelAttribute(name = "model") ProductAddBindingModel model) {
-        ProductServiceModel productServiceModel = this.productService.findProductById(id);
-        model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
-        model.setCategories(productServiceModel
-                .getCategories()
-                .stream()
-                .map(CategoryServiceModel::getName)
-                .collect(Collectors.toList()));
-
-        modelAndView.addObject("productId", id);
-        modelAndView.addObject("product", model);
-        return view("product/edit-product", modelAndView);
-    }
-
-    @PostMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_MODERATOR')")
-    public ModelAndView editProductConfirm(@PathVariable String id,
-                                           ModelAndView modelAndView,
-                                           @ModelAttribute (name = "model") ProductAddBindingModel model,
-                                           BindingResult bindingResult) {
-        this.editValidator.validate(model, bindingResult);
-        if (bindingResult.hasErrors()) {
-            modelAndView.addObject("productId", id);
-            modelAndView.addObject("product", model);
-            return view("product/edit-product", modelAndView);
-        }
-
-        ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
-        productServiceModel.setCategories(model.getCategories()
-                .stream()
-                .map(c -> this.modelMapper
-                        .map(this.categoryService.findCategoryById(c), CategoryServiceModel.class))
-                .collect(Collectors.toList()));
-        this.productService.editProduct(id, productServiceModel);
-        return redirect("/products/details/" + id);
-    }
-
     @GetMapping("/delete/{id}")
     @PreAuthorize("hasRole('ROLE_MODERATOR')")
     @PageTitle("Delete Product")
     public ModelAndView deleteProduct(@PathVariable String id, ModelAndView modelAndView) {
         ProductServiceModel productServiceModel = this.productService.findProductById(id);
         ProductAddBindingModel model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
-        model.setCategories(productServiceModel.getCategories().stream().map(c -> c.getName()).collect(Collectors.toList()));
-
+        model.setCategories(productServiceModel.getCategories()
+                .stream()
+                .map(CategoryServiceModel::getName)
+                .collect(Collectors.toList()));
         modelAndView.addObject("product", model);
         modelAndView.addObject("productId", id);
-
         return view("product/delete-product", modelAndView);
     }
 

@@ -50,8 +50,8 @@ public class ProductEditValidator implements Validator {
                     GlobalConstants.DESCRIPTION_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE);
         }
 
-        if (productAddBindingModel.getName().length() < GlobalConstants.DESCRIPTION_MIN_LENGTH
-                || productAddBindingModel.getName().length() > GlobalConstants.DESCRIPTION_MAX_LENGTH) {
+        if (productAddBindingModel.getDescription().length() < GlobalConstants.DESCRIPTION_MIN_LENGTH
+                || productAddBindingModel.getDescription().length() > GlobalConstants.DESCRIPTION_MAX_LENGTH) {
             errors.rejectValue("description",
                     GlobalConstants.DESCRIPTION_LENGTH_VALIDATION_MESSAGE,
                     GlobalConstants.DESCRIPTION_LENGTH_VALIDATION_MESSAGE);
