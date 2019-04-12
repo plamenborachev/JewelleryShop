@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.Order;
 import org.softuni.jewelleryshop.domain.models.service.OrderServiceModel;
 import org.softuni.jewelleryshop.error.OrderNotFoundException;
@@ -72,6 +73,6 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceModel findOrderById(String id) {
         return this.orderRepository.findById(id)
                 .map(o -> this.modelMapper.map(o, OrderServiceModel.class))
-                .orElseThrow(() -> new OrderNotFoundException("No such order exists!"));
+                .orElseThrow(() -> new OrderNotFoundException(GlobalConstants.ORDER_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 }

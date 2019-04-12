@@ -46,8 +46,8 @@ public class ProductAddValidator implements Validator {
         this.productRepository.findByName(productAddBindingModel.getName())
                 .ifPresent((c) -> errors
                         .rejectValue("name",
-                                GlobalConstants.PRODUCT_EXISTS_VALIDATION_MESSAGE,
-                                GlobalConstants.PRODUCT_EXISTS_VALIDATION_MESSAGE));
+                                GlobalConstants.PRODUCT_EXISTS_MESSAGE,
+                                GlobalConstants.PRODUCT_EXISTS_MESSAGE));
 
         if (productAddBindingModel.getDescription() == null
                 || productAddBindingModel.getDescription().equals("")) {

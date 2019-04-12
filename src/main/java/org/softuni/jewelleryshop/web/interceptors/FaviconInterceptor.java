@@ -1,5 +1,6 @@
 package org.softuni.jewelleryshop.web.interceptors;
 
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -16,7 +17,7 @@ public class FaviconInterceptor extends HandlerInterceptorAdapter {
                            Object handler,
                            ModelAndView modelAndView)
             throws Exception {
-        String link = "https://www.shareicon.net/data/32x32/2016/12/05/862039_diamond_512x512.png";
+        String link = GlobalConstants.FAVICON_LINK;
 
         if (modelAndView != null) {
             modelAndView.addObject("favicon", link);

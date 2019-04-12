@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.Offer;
 import org.softuni.jewelleryshop.domain.entities.Product;
 import org.softuni.jewelleryshop.domain.models.service.OfferServiceModel;
@@ -41,7 +42,10 @@ public class OfferServiceImpl implements OfferService {
     public List<OfferServiceModel> findAllByCategory(String category) {
         return this.offerRepository.findAll()
                 .stream()
-                .filter(offer -> offer.getProduct().getCategories().stream().anyMatch(categoryStream -> categoryStream.getName().equals(category)))
+                .filter(offer -> offer.getProduct().getCategories()
+                        .stream()
+                        .anyMatch(categoryStream -> categoryStream.getName()
+                                .equals(category)))
                 .map(offer -> this.modelMapper.map(offer, OfferServiceModel.class))
                 .collect(Collectors.toList());
     }
@@ -59,8 +63,9 @@ public class OfferServiceImpl implements OfferService {
         List<Offer> offers = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Offer offer = new Offer();
-            offer.setProduct(this.modelMapper.map(products.get(rnd.nextInt(products.size())), Product.class));
-            offer.setPrice(offer.getProduct().getPrice().multiply(new BigDecimal(0.8)));
+            offer.setProduct(this.modelMapper
+                    .map(products.get(rnd.nextInt(products.size())), Product.class));
+            offer.setPrice(offer.getProduct().getPrice().multiply(new BigDecimal(GlobalConstants.DISCOUNT_RATIO)));
 
             if (offers
                     .stream()

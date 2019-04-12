@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.Role;
 import org.softuni.jewelleryshop.domain.models.service.RoleServiceModel;
 import org.softuni.jewelleryshop.repository.RoleRepository;
@@ -25,10 +26,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void seedRolesInDb() {
         if (this.roleRepository.count() == 0) {
-            this.roleRepository.saveAndFlush(new Role("ROLE_USER"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_MODERATOR"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ADMIN"));
-            this.roleRepository.saveAndFlush(new Role("ROLE_ROOT"));
+            this.roleRepository.saveAndFlush(new Role(GlobalConstants.ROLE_USER));
+            this.roleRepository.saveAndFlush(new Role(GlobalConstants.ROLE_MODERATOR));
+            this.roleRepository.saveAndFlush(new Role(GlobalConstants.ROLE_ADMIN));
+            this.roleRepository.saveAndFlush(new Role(GlobalConstants.ROLE_ROOT));
         }
     }
 
@@ -55,6 +56,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleServiceModel findByAuthority(String authority) {
-        return this.modelMapper.map(this.roleRepository.findByAuthority(authority), RoleServiceModel.class);
+        return this.modelMapper
+                .map(this.roleRepository.findByAuthority(authority), RoleServiceModel.class);
     }
 }

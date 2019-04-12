@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.web.controllers;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.models.service.OrderProductServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.OrderServiceModel;
 import org.softuni.jewelleryshop.domain.models.view.OrderProductViewModel;
@@ -49,11 +50,11 @@ public class CartController extends BaseController {
     public ModelAndView addToCartConfirm(String id, Integer quantity, HttpSession session) {
 
         if (quantity == null){
-            throw new IllegalArgumentException("You have to choose quantity first!");
+            throw new IllegalArgumentException(GlobalConstants.QUANTITY_EXCEPTION_MESSAGE);
         }
 
         if (quantity <= 0){
-            throw new IllegalArgumentException("You have to choose positive quantity!");
+            throw new IllegalArgumentException(GlobalConstants.POSITIVE_QUANTITY_EXCEPTION_MESSAGE);
         }
 
         ProductDetailsViewModel product = this.modelMapper
@@ -101,7 +102,7 @@ public class CartController extends BaseController {
         OrderServiceModel orderServiceModel = this.prepareOrder(cart, principal.getName());
 
         if (orderServiceModel.getProducts().isEmpty()){
-            throw new IllegalArgumentException("The cart is empty!");
+            throw new IllegalArgumentException(GlobalConstants.CART_EMPTY_EXCEPTION_MESSAGE);
         }
 
         this.orderService.createOrder(orderServiceModel);

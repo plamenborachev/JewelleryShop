@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 
 import org.softuni.jewelleryshop.domain.models.binding.UserEditBindingModel;
 import org.softuni.jewelleryshop.domain.models.binding.UserRegisterBindingModel;
+import org.softuni.jewelleryshop.domain.models.service.RoleServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.UserServiceModel;
 import org.softuni.jewelleryshop.domain.models.view.UserAllViewModel;
 import org.softuni.jewelleryshop.domain.models.view.UserProfileViewModel;
@@ -105,13 +106,8 @@ public class UserController extends BaseController {
             modelAndView.addObject("model", model);
             return view("/users/edit-profile", modelAndView);
         }
-//        if (model.getPassword() != null && !model.getPassword().equals(model.getConfirmPassword())) {
-//            modelAndView.addObject("model", model);
-//            return view("/users/edit-profile", modelAndView);
-//        }
         this.userService.editUserProfile(this.modelMapper
                 .map(model, UserServiceModel.class), model.getOldPassword());
-
         return redirect("/users/profile");
     }
 
@@ -123,14 +119,14 @@ public class UserController extends BaseController {
                 .stream()
                 .map(u -> {
                     UserAllViewModel user = this.modelMapper.map(u, UserAllViewModel.class);
-                    user.setAuthorities(u.getAuthorities().stream().map(a -> a.getAuthority()).collect(Collectors.toSet()));
-
+                    user.setAuthorities(u.getAuthorities()
+                            .stream()
+                            .map(RoleServiceModel::getAuthority)
+                            .collect(Collectors.toSet()));
                     return user;
                 })
                 .collect(Collectors.toList());
-
         modelAndView.addObject("users", users);
-
         return view("/users/all-users", modelAndView);
     }
 

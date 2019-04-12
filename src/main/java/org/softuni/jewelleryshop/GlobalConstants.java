@@ -20,8 +20,7 @@ public class GlobalConstants {
     public static final String PASSWORDS_MUST_MATCH_VALIDATION_MESSAGE
             = "Password and Confirm Password are not equal!";
 
-    public static final String WRONG_PASSWORD_VALIDATION_MESSAGE
-            = "Wrong password!";
+    public static final String WRONG_PASSWORD_MESSAGE = "Wrong password!";
 
     public static final String EMAIL_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
             = "Email cannot be null or empty!";
@@ -41,7 +40,7 @@ public class GlobalConstants {
             = "Jewellery name must be between 3 and 40 characters!";
     public static final int PRODUCT_NAME_MIN_LENGTH = 3;
     public static final int PRODUCT_NAME_MAX_LENGTH = 40;
-    public static final String PRODUCT_EXISTS_VALIDATION_MESSAGE = "Jewellery already exists!";
+    public static final String PRODUCT_EXISTS_MESSAGE = "Jewellery already exists!";
 
     public static final String DESCRIPTION_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
             = "Description cannot be null or empty!";
@@ -57,4 +56,29 @@ public class GlobalConstants {
             = "You have to choose at least one category!";
 
     public static final String IMAGE_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE = "You have to upload an image!";
+
+    public static int PAGE_NOT_FOUND_CODE = 404;
+    public static int CONFLICT_CODE = 409;
+
+    public static final double DISCOUNT_RATIO = 0.8;
+
+    public static final String ORDER_NOT_FOUND_EXCEPTION_MESSAGE = "No such Order exists!";
+    public static final String PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE = "No such Product exists!";
+    public static final String CATEGORY_NOT_FOUND_EXCEPTION_MESSAGE = "No such Category exists!";
+    public static final String USER_NOT_FOUND_EXCEPTION_MESSAGE = "No such User exists!";
+    public static final String QUANTITY_EXCEPTION_MESSAGE = "You have to choose quantity first!";
+    public static final String POSITIVE_QUANTITY_EXCEPTION_MESSAGE = "You have to choose quantity greater than 0!";
+    public static final String CART_EMPTY_EXCEPTION_MESSAGE = "The cart is empty!";
+
+    public static final String ROLE_ROOT = "ROLE_ROOT";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
+    public static final String ROLE_MODERATOR = "ROLE_MODERATOR";
+    public static final String ROLE_USER = "ROLE_USER";
+
+    public static final String CASE_USER = "user";
+    public static final String CASE_MODERATOR = "moderator";
+    public static final String CASE_ADMIN = "admin";
+
+    public static final String FAVICON_LINK = "https://www.shareicon.net/data/32x32/2016/12/05/862039_diamond_512x512.png";
+    public static final String SITE_TITLE = "Jewelery Shop";
 }

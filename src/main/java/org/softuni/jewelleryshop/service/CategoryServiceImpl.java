@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.Category;
 import org.softuni.jewelleryshop.domain.models.service.CategoryServiceModel;
 import org.softuni.jewelleryshop.repository.CategoryRepository;
@@ -28,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryServiceModel addCategory(CategoryServiceModel categoryServiceModel) {
         if (!validator.validate(categoryServiceModel).isEmpty()){
-            throw new IllegalArgumentException("Invalid Category!");
+            throw new IllegalArgumentException(GlobalConstants.CATEGORY_NOT_FOUND_EXCEPTION_MESSAGE);
         }
         Category category = this.modelMapper.map(categoryServiceModel, Category.class);
         return this.modelMapper.map(this.categoryRepository.saveAndFlush(category), CategoryServiceModel.class);
@@ -45,7 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryServiceModel findCategoryById(String id) {
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
 
         return this.modelMapper.map(category, CategoryServiceModel.class);
     }
@@ -53,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryServiceModel editCategory(String id, CategoryServiceModel categoryServiceModel) {
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
 
         category.setName(categoryServiceModel.getName());
 
@@ -63,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryServiceModel deleteCategory(String id) {
         Category category = this.categoryRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(IllegalArgumentException::new);
 
         this.categoryRepository.delete(category);
 

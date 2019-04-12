@@ -56,8 +56,8 @@ public class UserEditValidator implements Validator {
                 && !this.bCryptPasswordEncoder
                     .matches(userEditBindingModel.getOldPassword(), oldPassword)) {
             errors.rejectValue("oldPassword",
-                    GlobalConstants.WRONG_PASSWORD_VALIDATION_MESSAGE,
-                    GlobalConstants.WRONG_PASSWORD_VALIDATION_MESSAGE);
+                    GlobalConstants.WRONG_PASSWORD_MESSAGE,
+                    GlobalConstants.WRONG_PASSWORD_MESSAGE);
         }
 
         if (userEditBindingModel.getPassword() != null

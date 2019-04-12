@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.Category;
 import org.softuni.jewelleryshop.domain.entities.Product;
 import org.softuni.jewelleryshop.domain.models.service.ProductServiceModel;
@@ -48,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElse(null);
 
         if (product != null) {
-            throw new ProductNameAlreadyExistsException("Product already exists");
+            throw new ProductNameAlreadyExistsException(GlobalConstants.PRODUCT_EXISTS_MESSAGE);
         }
 
         product = this.modelMapper.map(productServiceModel, Product.class);
@@ -76,13 +77,13 @@ public class ProductServiceImpl implements ProductService {
                             .ifPresent(o -> productServiceModel.setDiscountedPrice(o.getPrice()));
                     return productServiceModel;
                 })
-                .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
+                .orElseThrow(() -> new ProductNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     @Override
     public ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel) {
         Product product = this.productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
+                .orElseThrow(() -> new ProductNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE));
 
         product.setName(productServiceModel.getName());
         product.setDescription(productServiceModel.getDescription());
@@ -96,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 
         this.offerRepository.findByProduct_Id(product.getId())
                 .ifPresent((o) -> {
-                    o.setPrice(product.getPrice().multiply(new BigDecimal(0.8)));
+                    o.setPrice(product.getPrice().multiply(new BigDecimal(GlobalConstants.DISCOUNT_RATIO)));
                     this.offerRepository.save(o);
                 });
 
@@ -108,7 +109,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(String id) {
         Product product = this.productRepository
                 .findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product with the given id was not found!"));
+                .orElseThrow(() -> new ProductNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE));
         this.productRepository.delete(product);
     }
 

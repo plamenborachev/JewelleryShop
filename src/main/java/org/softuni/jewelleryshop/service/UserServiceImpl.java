@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.service;
 
 import org.modelmapper.ModelMapper;
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.entities.User;
 import org.softuni.jewelleryshop.domain.models.service.UserServiceModel;
 import org.softuni.jewelleryshop.repository.UserRepository;
@@ -53,23 +54,23 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return this.userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException(GlobalConstants.USER_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     @Override
     public UserServiceModel findUserByUserName(String username) {
         return this.userRepository.findByUsername(username)
                 .map(u -> this.modelMapper.map(u, UserServiceModel.class))
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(() -> new UsernameNotFoundException(GlobalConstants.USER_NOT_FOUND_EXCEPTION_MESSAGE));
     }
 
     @Override
     public UserServiceModel editUserProfile(UserServiceModel userServiceModel, String oldPassword) {
         User user = this.userRepository.findByUsername(userServiceModel.getUsername())
-                .orElseThrow(()-> new UsernameNotFoundException("Username not found!"));
+                .orElseThrow(()-> new UsernameNotFoundException(GlobalConstants.USER_NOT_FOUND_EXCEPTION_MESSAGE));
 
         if (!this.bCryptPasswordEncoder.matches(oldPassword, user.getPassword())) {
-            throw new IllegalArgumentException("Incorrect password!");
+            throw new IllegalArgumentException(GlobalConstants.WRONG_PASSWORD_MESSAGE);
         }
 
         user.setPassword(userServiceModel.getPassword() != null ?
@@ -88,23 +89,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void setUserRole(String id, String role) {
         User user = this.userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Incorrect id!"));
+                .orElseThrow(() -> new IllegalArgumentException(GlobalConstants.USER_NOT_FOUND_EXCEPTION_MESSAGE));
 
         UserServiceModel userServiceModel = this.modelMapper.map(user, UserServiceModel.class);
         userServiceModel.getAuthorities().clear();
 
         switch (role) {
-            case "user":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
+            case GlobalConstants.CASE_USER:
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_USER));
                 break;
-            case "moderator":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
+            case GlobalConstants.CASE_MODERATOR:
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_USER));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_MODERATOR));
                 break;
-            case "admin":
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_USER"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_MODERATOR"));
-                userServiceModel.getAuthorities().add(this.roleService.findByAuthority("ROLE_ADMIN"));
+            case GlobalConstants.CASE_ADMIN:
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_USER));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_MODERATOR));
+                userServiceModel.getAuthorities().add(this.roleService.findByAuthority(GlobalConstants.ROLE_ADMIN));
                 break;
         }
 

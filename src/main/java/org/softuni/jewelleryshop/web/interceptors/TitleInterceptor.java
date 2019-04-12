@@ -1,5 +1,6 @@
 package org.softuni.jewelleryshop.web.interceptors;
 
+import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.web.annotations.PageTitle;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -18,7 +19,7 @@ public class TitleInterceptor extends HandlerInterceptorAdapter {
                            Object handler,
                            ModelAndView modelAndView)
             throws Exception {
-        String title = "Jewelery Shop";
+        String title = GlobalConstants.SITE_TITLE;
 
         if (modelAndView == null) {
             modelAndView = new ModelAndView();
