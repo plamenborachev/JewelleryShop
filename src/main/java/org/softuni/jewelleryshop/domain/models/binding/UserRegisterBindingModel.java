@@ -1,5 +1,9 @@
 package org.softuni.jewelleryshop.domain.models.binding;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserRegisterBindingModel {
 
     private String username;
@@ -10,6 +14,9 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
+    @NotNull
+    @NotEmpty
+    @Size(min = 5, max = 20, message = "Username must be between 5 and 20 characters!")
     public String getUsername() {
         return username;
     }
@@ -18,6 +25,9 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotNull
+    @NotEmpty
+    @Size(min = 5, message = "Password must be at least 5 symbols!")
     public String getPassword() {
         return password;
     }
@@ -26,6 +36,9 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
+    @NotNull
+    @NotEmpty
+    @Size(min = 5, message = "Confirm password must be at least 5 symbols!")
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -34,6 +47,8 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotNull
+    @NotEmpty
     public String getEmail() {
         return email;
     }

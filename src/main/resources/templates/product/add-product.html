@@ -71,6 +71,7 @@
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
 </body>
+
 <script>
     fetch('/categories/fetch')
         .then((response) => response.json())
@@ -80,4 +81,5 @@
         })
         .catch((err) => console.log(err));
 </script>
+
 </html>

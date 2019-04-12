@@ -1,6 +1,7 @@
 package org.softuni.jewelleryshop.web.controllers;
 
 import org.modelmapper.ModelMapper;
+
 import org.softuni.jewelleryshop.domain.models.binding.ProductAddBindingModel;
 import org.softuni.jewelleryshop.domain.models.service.CategoryServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.ProductServiceModel;
@@ -14,6 +15,7 @@ import org.softuni.jewelleryshop.service.ProductService;
 import org.softuni.jewelleryshop.validation.ProductAddValidator;
 import org.softuni.jewelleryshop.validation.ProductEditValidator;
 import org.softuni.jewelleryshop.web.annotations.PageTitle;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -97,8 +99,8 @@ public class ProductController extends BaseController {
                 .stream()
                 .map(CategoryServiceModel::getName)
                 .collect(Collectors.toList()));
-        modelAndView.addObject("productId", id);
         modelAndView.addObject("model", model);
+        modelAndView.addObject("productId", id);
         return view("product/edit-product", modelAndView);
     }
 

@@ -1,7 +1,6 @@
 package org.softuni.jewelleryshop.config;
 
 import org.modelmapper.ModelMapper;
-import org.softuni.jewelleryshop.mappings.MappingsInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,16 +10,10 @@ import javax.validation.Validator;
 
 @Configuration
 public class ApplicationBeanConfiguration {
-    static ModelMapper mapper;
-
-    static {
-        mapper = new ModelMapper();
-        MappingsInitializer.initMappings(mapper);
-    }
 
     @Bean
     public ModelMapper modelMapper() {
-        return mapper;
+        return new ModelMapper();
     }
 
     @Bean
@@ -32,4 +25,11 @@ public class ApplicationBeanConfiguration {
     public Validator validator() {
         return Validation.buildDefaultValidatorFactory().getValidator();
     }
+
+    //    static ModelMapper mapper;
+//
+//    static {
+//        mapper = new ModelMapper();
+//        MappingsInitializer.initMappings(mapper);
+//    }
 }

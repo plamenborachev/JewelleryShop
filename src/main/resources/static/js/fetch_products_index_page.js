@@ -44,7 +44,7 @@ function formatProduct(product) {
         + '<div class="text-center">'
         + `<a href="/products/details/${product.id}"><img src="${product.imageUrl}" class="product-image-home img-thumbnail px-auto" alt="Image not loaded..." height="200"></a>`
         + '</div>'
-        + `<h5 class="text-center font-weight-bold mt-3">${product.name}</h5>`
+        + `<h5 class="text-center text-primary font-weight-bold mt-3">${product.name}</h5>`
         + `<h6 class="text-center font-weight-bold">${product.price.toFixed(2)}&euro;</h6>`
         + '</div>'
 }

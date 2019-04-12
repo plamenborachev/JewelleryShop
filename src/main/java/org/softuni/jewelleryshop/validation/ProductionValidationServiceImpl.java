@@ -1,9 +1,8 @@
-package org.softuni.jewelleryshop.validation.implementations;
+package org.softuni.jewelleryshop.validation;
 
 import org.softuni.jewelleryshop.domain.entities.Product;
 import org.softuni.jewelleryshop.domain.models.service.CategoryServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.ProductServiceModel;
-import org.softuni.jewelleryshop.validation.ProductValidationService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

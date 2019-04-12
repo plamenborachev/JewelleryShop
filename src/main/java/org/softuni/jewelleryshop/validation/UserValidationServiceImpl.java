@@ -1,7 +1,6 @@
-package org.softuni.jewelleryshop.validation.implementations;
+package org.softuni.jewelleryshop.validation;
 
 import org.softuni.jewelleryshop.domain.models.service.UserServiceModel;
-import org.softuni.jewelleryshop.validation.UserValidationService;
 import org.springframework.stereotype.Component;
 
 @Component

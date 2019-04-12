@@ -2,13 +2,36 @@ package org.softuni.jewelleryshop;
 
 public class GlobalConstants {
 
+    public static final String USERNAME_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
+            = "Username cannot be null or empty!";
+    public static final String USERNAME_LENGTH_VALIDATION_MESSAGE
+            = "Username must be between 5 and 20 characters!";
+    public static final String USERNAME_EXISTS_VALIDATION_MESSAGE
+            = "Username already exists";
+    public static final int USERNAME_MIN_LENGTH = 5;
+    public static final int USERNAME_MAX_LENGTH = 20;
+
+    public static final String PASSWORD_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
+            = "Password cannot be null or empty!";
+    public static final String PASSWORD_LENGTH_VALIDATION_MESSAGE
+            = "Password must be at least 5 symbols!";
+    public static final int PASSWORD_MIN_LENGTH = 5;
+
+    public static final String PASSWORDS_MUST_MATCH_VALIDATION_MESSAGE
+            = "Password and Confirm Password are not equal!";
+
+    public static final String WRONG_PASSWORD_VALIDATION_MESSAGE
+            = "Wrong password!";
+
+    public static final String EMAIL_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
+            = "Email cannot be null or empty!";
+
     public static final String CATEGORY_NAME_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
             = "Category name cannot be null or empty!";
     public static final String CATEGORY_NAME_LENGTH_VALIDATION_MESSAGE
             = "Category name must be between 3 and 20 characters!";
     public static final String CATEGORY_EXISTS_VALIDATION_MESSAGE
             = "Category already exists";
-
     public static final int CATEGORY_NAME_MIN_LENGTH = 3;
     public static final int CATEGORY_NAME_MAX_LENGTH = 20;
 
@@ -16,17 +39,14 @@ public class GlobalConstants {
             = "Jewellery name cannot be null or empty!";
     public static final String PRODUCT_NAME_LENGTH_VALIDATION_MESSAGE
             = "Jewellery name must be between 3 and 40 characters!";
-
     public static final int PRODUCT_NAME_MIN_LENGTH = 3;
     public static final int PRODUCT_NAME_MAX_LENGTH = 40;
-
     public static final String PRODUCT_EXISTS_VALIDATION_MESSAGE = "Jewellery already exists!";
 
     public static final String DESCRIPTION_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
             = "Description cannot be null or empty!";
     public static final String DESCRIPTION_LENGTH_VALIDATION_MESSAGE
             = "Description must be between 15 and 100 characters!";
-
     public static final int DESCRIPTION_MIN_LENGTH = 15;
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
