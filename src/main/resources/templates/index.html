@@ -9,18 +9,54 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <div class="jumbotron bg-light text-center">
-        <h1 class="display-1">Jewellery Shop</h1>
-        <hr>
-        <p>
-            This is the biggest, best online shop for jewelleries! <a th:href="@{/users/login}">Login</a>, if you don't
-            have an account,
-            don't hesitate - <a th:href="@{/users/register}">Register</a>
-        </p>
+    <div class="jumbotron bg-light text-center py-1">
+        <div class="row d-flex justify-content-between mx-0 my-2 h-auto">
+            <div class="data col-md-12">
+                <h1 class="display-1 font-weight-bolder">Jewellery Sh<i class="far fa-gem fa-xs"></i>p</h1>
+<!--                <p>-->
+<!--                    This is the biggest, best online shop for jewelleries! <a th:href="@{/users/login}">Login</a>, if you don't-->
+<!--                    have an account,-->
+<!--                    don't hesitate - <a th:href="@{/users/register}">Register</a>-->
+<!--                </p>-->
+            </div>
+            <div class="data col-md-10">
+
+                <!--            <h1 class="text-center font-weight-bold">Jewelleries</h1>-->
+                <div class="products-data px-2">
+                    <!--                Products shown here-->
+                </div>
+            </div>
+
+            <div class="products-navigation col-md-2 px-2">
+                <form class="mt-3">
+                    <div class="custom-control custom-radio mt-3">
+                        <input type="radio" id="allRadio" name="selection"
+                               class="custom-control-input"
+                               value="all">
+                        <label class="h4 custom-control-label" for="allRadio">All</label>
+                    </div>
+                    <th:block th:each="category : ${categories}" th:object="${category}">
+                        <div class="custom-control custom-radio mt-3">
+                            <input type="radio" th:id="|*{name.toLowerCase()}Radio|" name="selection"
+                                   class="custom-control-input"
+                                   th:value="*{name}">
+                            <label class="h4 custom-control-label" th:for="|*{name.toLowerCase()}Radio|"
+                                   th:utext="*{name}"></label>
+                        </div>
+                    </th:block>
+                </form>
+            </div>
+
+        </div>
+
     </div>
 </main>
-<footer class="fixed-bottom">
+
+<footer>
     <th:block th:include="~{fragments/footer}"></th:block>
 </footer>
+
+<script th:src="@{/js/fetch_products_index_page.js}"></script>
+
 </body>
 </html>

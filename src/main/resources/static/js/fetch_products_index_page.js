@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#allRadio').attr('checked', true);
 
-    fetch('http://localhost:8000/products/fetch/all')
+    fetch('http://localhost:8000/fetch/all')
         .then((response) => response.json())
         .then((json) => {
             $('.products-data').empty();
@@ -21,7 +21,7 @@ $(document).ready(function () {
 $('input[type=radio][name=selection]').change(function () {
     let category = $(this).val();
 
-    fetch('http://localhost:8000/products/fetch/' + category)
+    fetch('http://localhost:8000/fetch/' + category)
         .then((response) => response.json())
         .then((json) => {
             $('.products-data').empty();

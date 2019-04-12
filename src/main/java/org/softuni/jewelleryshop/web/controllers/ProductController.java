@@ -12,7 +12,7 @@ import org.softuni.jewelleryshop.service.CategoryService;
 import org.softuni.jewelleryshop.service.CloudinaryService;
 import org.softuni.jewelleryshop.service.ProductService;
 import org.softuni.jewelleryshop.validation.ProductAddValidator;
-import org.softuni.jewelleryshop.validation.implementations.ProductEditValidator;
+import org.softuni.jewelleryshop.validation.ProductEditValidator;
 import org.softuni.jewelleryshop.web.annotations.PageTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -97,7 +97,7 @@ public class ProductController extends BaseController {
     }
 
     @GetMapping("/details/{id}")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @PageTitle("Product Details")
     public ModelAndView detailsProduct(@PathVariable String id, ModelAndView modelAndView) {
         ProductDetailsViewModel model = this.modelMapper

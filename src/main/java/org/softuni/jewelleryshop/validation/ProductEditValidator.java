@@ -1,4 +1,4 @@
-package org.softuni.jewelleryshop.validation.implementations;
+package org.softuni.jewelleryshop.validation;
 
 import org.softuni.jewelleryshop.GlobalConstants;
 import org.softuni.jewelleryshop.domain.models.binding.ProductAddBindingModel;
