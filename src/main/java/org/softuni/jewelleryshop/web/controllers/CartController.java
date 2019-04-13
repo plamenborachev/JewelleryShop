@@ -100,11 +100,9 @@ public class CartController extends BaseController {
     public ModelAndView checkoutConfirm(HttpSession session, Principal principal) {
         var cart = this.retrieveCart(session);
         OrderServiceModel orderServiceModel = this.orderService.prepareOrder(cart, principal.getName());
-
         if (orderServiceModel.getProducts().isEmpty()){
             throw new IllegalArgumentException(GlobalConstants.CART_EMPTY_EXCEPTION_MESSAGE);
         }
-
         this.orderService.createOrder(orderServiceModel);
         return redirect("/home");
     }

@@ -39,7 +39,10 @@ public class OrderServiceImpl implements OrderService {
     public BigDecimal calcTotal(List<ShoppingCartItem> cart) {
         BigDecimal result = new BigDecimal(0);
         for (ShoppingCartItem item : cart) {
-            result = result.add(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
+            result = result.add(item
+                    .getProduct()
+                    .getPrice()
+                    .multiply(new BigDecimal(item.getQuantity())));
         }
         return result;
     }
@@ -66,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
             String productId = orderProductServiceModel.getProduct().getId();
             ProductServiceModel productServiceModel = this.productService.findProductById(productId);
             this.productService.decreaseProductQuantity(productId, item.getQuantity(), productServiceModel);
+            orderProductServiceModel.setQuantity(item.getQuantity());
             products.add(orderProductServiceModel);
         }
         orderServiceModel.setProducts(products);

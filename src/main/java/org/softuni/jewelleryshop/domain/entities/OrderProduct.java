@@ -9,6 +9,7 @@ public class OrderProduct extends BaseEntity {
 
     private Product product;
     private BigDecimal price;
+    private Integer quantity;
 
     public OrderProduct() {
     }
@@ -33,5 +34,13 @@ public class OrderProduct extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

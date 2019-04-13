@@ -55,7 +55,6 @@ public class OrdersController extends BaseController {
         OrderViewModel orderViewModel = this.mapper
                 .map(this.orderService.findOrderById(id), OrderViewModel.class);
         modelAndView.addObject("order", orderViewModel);
-
         return view("order/order-details", modelAndView);
     }
 
