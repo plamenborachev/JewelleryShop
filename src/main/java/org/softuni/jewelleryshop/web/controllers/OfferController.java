@@ -50,12 +50,12 @@ public class OfferController extends BaseController {
         if (category.equals("all")) {
             return this.offerService.findAllOffers()
                     .stream()
-                    .map(o -> this.modelMapper.map(o, OfferViewModel.class))
+                    .map(offers -> this.modelMapper.map(offers, OfferViewModel.class))
                     .collect(Collectors.toList());
         }
         return this.offerService.findAllByCategory(category)
                 .stream()
-                .map(product -> this.modelMapper.map(product, OfferViewModel.class))
+                .map(offers -> this.modelMapper.map(offers, OfferViewModel.class))
                 .collect(Collectors.toList());
     }
 }

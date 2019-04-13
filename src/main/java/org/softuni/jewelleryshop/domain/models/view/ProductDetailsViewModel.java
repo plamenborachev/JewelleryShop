@@ -9,6 +9,7 @@ public class ProductDetailsViewModel {
     private String description;
     private BigDecimal price;
     private BigDecimal discountedPrice;
+    private Integer quantity;
     private String imageUrl;
 
     public ProductDetailsViewModel() {
@@ -52,6 +53,14 @@ public class ProductDetailsViewModel {
 
     public void setDiscountedPrice(BigDecimal discountedPrice) {
         this.discountedPrice = discountedPrice;
+    }
+
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getImageUrl() {

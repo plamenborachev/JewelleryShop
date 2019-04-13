@@ -7,6 +7,7 @@ public class OfferViewModel {
     private ProductDetailsViewModel product;
     private BigDecimal price;
 
+
     public OfferViewModel() {
     }
 
@@ -25,4 +26,5 @@ public class OfferViewModel {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
 }

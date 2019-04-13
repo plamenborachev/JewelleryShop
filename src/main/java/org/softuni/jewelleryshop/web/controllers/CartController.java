@@ -2,7 +2,6 @@ package org.softuni.jewelleryshop.web.controllers;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.jewelleryshop.GlobalConstants;
-import org.softuni.jewelleryshop.domain.models.service.OrderProductServiceModel;
 import org.softuni.jewelleryshop.domain.models.service.OrderServiceModel;
 import org.softuni.jewelleryshop.domain.models.view.OrderProductViewModel;
 import org.softuni.jewelleryshop.domain.models.view.ProductDetailsViewModel;
@@ -21,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class CartController extends BaseController {
         var cart = this.retrieveCart(session);
         this.addItemToCart(cartItem, cart);
 
-        return redirect("/home");
+        return redirect("/cart/details");
     }
 
     @GetMapping("/details")
@@ -91,7 +88,6 @@ public class CartController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView removeFromCartConfirm(String id, HttpSession session) {
         this.removeItemFromCart(id, this.retrieveCart(session));
-
         return redirect("/cart/details");
     }
 
@@ -104,7 +100,8 @@ public class CartController extends BaseController {
             throw new IllegalArgumentException(GlobalConstants.CART_EMPTY_EXCEPTION_MESSAGE);
         }
         this.orderService.createOrder(orderServiceModel);
-        return redirect("/home");
+        cart.clear();
+        return redirect("/orders/my");
     }
 
     private List<ShoppingCartItem> retrieveCart(HttpSession session) {
