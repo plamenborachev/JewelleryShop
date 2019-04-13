@@ -7,6 +7,7 @@ public class ProductAllViewModel {
     private String id;
     private String name;
     private BigDecimal price;
+    private Integer quantity;
     private String imageUrl;
 
     public ProductAllViewModel() {
@@ -34,6 +35,14 @@ public class ProductAllViewModel {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getImageUrl() {

@@ -22,19 +22,17 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final OfferRepository offerRepository;
-    private final CategoryService categoryService;
     private final ProductValidationService productValidation;
     private final ModelMapper modelMapper;
 
     @Autowired
     public ProductServiceImpl(
             ProductRepository productRepository,
-            OfferRepository offerRepository, CategoryService categoryService,
+            OfferRepository offerRepository,
             ProductValidationService productValidation,
             ModelMapper modelMapper) {
         this.productRepository = productRepository;
         this.offerRepository = offerRepository;
-        this.categoryService = categoryService;
         this.productValidation = productValidation;
         this.modelMapper = modelMapper;
     }
@@ -88,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
         product.setName(productServiceModel.getName());
         product.setDescription(productServiceModel.getDescription());
         product.setPrice(productServiceModel.getPrice());
+        product.setQuantity(productServiceModel.getQuantity());
         product.setCategories(
                 productServiceModel.getCategories()
                         .stream()
@@ -101,6 +100,15 @@ public class ProductServiceImpl implements ProductService {
                     this.offerRepository.save(o);
                 });
 
+        return this.modelMapper
+                .map(this.productRepository.saveAndFlush(product), ProductServiceModel.class);
+    }
+
+    @Override
+    public ProductServiceModel decreaseProductQuantity(String productId, int value, ProductServiceModel productServiceModel) {
+        Product product = this.productRepository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(GlobalConstants.PRODUCT_NOT_FOUND_EXCEPTION_MESSAGE));
+        product.setQuantity(product.getQuantity() - value);
         return this.modelMapper
                 .map(this.productRepository.saveAndFlush(product), ProductServiceModel.class);
     }

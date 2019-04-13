@@ -12,7 +12,7 @@
     <div class="jumbotron bg-light text-center">
         <h1 class="text-center text-danger font-weight-bolder">
             <i class="fas fa-skull-crossbones"></i>
-            "Oops! Something is broken!"
+            "Oops! Something is wrong!"
             <i class="fas fa-skull-crossbones"></i>
         </h1>
 
@@ -22,7 +22,11 @@
             <h3 th:utext="${message}" class="text-danger"></h3>
         </div>
 
-        <input class="btn btn-primary" type="button" onclick="history.go(-1);" th:value="Back"/>
+        <a class="btn btn-secondary" th:href="@{/home}">
+            H<i class="far fa-gem fa-xs"></i>me
+        </a>
+        <input class="btn btn-primary px-4" type="button" onclick="history.go(-1);"
+               th:value="Back"/>
     </div>
 </main>
 <footer class="fixed-bottom">

@@ -9,33 +9,35 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <h1 class="text-center font-weight-bolder">All Categories</h1>
-    <hr class="hr-2 bg-secondary w-75">
-    <table class="table table-hover w-75 mx-auto">
-        <thead>
-        <tr class="row mx-auto font-weight-bold table-info">
-            <th class="col-md-2 text-center">#</th>
-            <th class="col-md-5 text-center">Name</th>
-            <th class="col-md-5 text-center">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <th:block th:each="category, iter : ${categories}">
-            <tr class="row mx-auto">
-                <th class="col-md-2 text-center" th:utext="${iter.index + 1}"></th>
-                <td class="col-md-5 text-center" th:utext="${category.name}"></td>
-                <td class="col-md-5 text-center">
-                    <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-primary">Edit</a>
-                    <a th:href="@{/categories/delete/{id}(id=${category.id})}"  class="btn btn-danger">Delete</a>
-                </td>
+    <div class="jumbotron bg-light text-center py-3">
+        <h1 class="text-center font-weight-bolder">All Categories</h1>
+        <hr class="hr-2 bg-secondary w-75">
+        <table class="table table-hover w-75 mx-auto">
+            <thead>
+            <tr class="row mx-auto font-weight-bold table-info">
+                <th class="col-md-2 text-center">#</th>
+                <th class="col-md-5 text-center">Name</th>
+                <th class="col-md-5 text-center">Actions</th>
             </tr>
-        </th:block>
+            </thead>
+            <tbody>
+
+            <th:block th:each="category, iter : ${categories}">
+                <tr class="row mx-auto">
+                    <th class="col-md-2 text-center" th:utext="${iter.index + 1}"></th>
+                    <td class="col-md-5 text-center" th:utext="${category.name}"></td>
+                    <td class="col-md-5 text-center">
+                        <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-primary">Edit</a>
+                        <a th:href="@{/categories/delete/{id}(id=${category.id})}" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
 
 
-        </tbody>
-    </table>
-    <hr class="hr-2 bg-secondary w-75">
+            </tbody>
+        </table>
+        <hr class="hr-2 bg-secondary w-75">
+    </div>
 </main>
 <footer>
     <th:block th:include="~{fragments/footer}"></th:block>

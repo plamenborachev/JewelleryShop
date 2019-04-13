@@ -30,7 +30,7 @@ public class GlobalConstants {
     public static final String CATEGORY_NAME_LENGTH_VALIDATION_MESSAGE
             = "Category name must be between 3 and 20 characters!";
     public static final String CATEGORY_EXISTS_VALIDATION_MESSAGE
-            = "Category already exists";
+            = "Category already exists!";
     public static final int CATEGORY_NAME_MIN_LENGTH = 3;
     public static final int CATEGORY_NAME_MAX_LENGTH = 20;
 
@@ -49,8 +49,15 @@ public class GlobalConstants {
     public static final int DESCRIPTION_MIN_LENGTH = 15;
     public static final int DESCRIPTION_MAX_LENGTH = 100;
 
-    public static final String PRICE_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE = "Price cannot be null or empty!";
-    public static final String PRICE_POSITIVE_VALIDATION_MESSAGE = "Price must be greater than zero!";
+    public static final String PRICE_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
+            = "Price cannot be null or empty!";
+    public static final String PRICE_POSITIVE_VALIDATION_MESSAGE
+            = "Price must be greater than zero!";
+
+    public static final String QUANTITY_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
+            = "Quantity cannot be null or empty!";
+    public static final String QUANTITY_POSITIVE_VALIDATION_MESSAGE
+            = "Price must be equal to or greater than zero!";
 
     public static final String CATEGORY_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE
             = "You have to choose at least one category!";
@@ -81,4 +88,6 @@ public class GlobalConstants {
 
     public static final String FAVICON_LINK = "https://www.shareicon.net/data/32x32/2016/12/05/862039_diamond_512x512.png";
     public static final String SITE_TITLE = "Jewelery Shop";
+
+    public static final String PRODUCT_LIMITED_QUANTITY = "%s items of \"%s\" left in stock!";
 }

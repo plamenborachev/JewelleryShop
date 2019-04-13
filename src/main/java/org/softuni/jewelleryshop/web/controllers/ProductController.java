@@ -94,11 +94,10 @@ public class ProductController extends BaseController {
                                     @ModelAttribute(name = "model") ProductAddBindingModel model) {
         ProductServiceModel productServiceModel = this.productService.findProductById(id);
         model = this.modelMapper.map(productServiceModel, ProductAddBindingModel.class);
-        model.setCategories(productServiceModel
-                .getCategories()
-                .stream()
-                .map(CategoryServiceModel::getName)
-                .collect(Collectors.toList()));
+        model.setCategories(productServiceModel.getCategories()
+                                                .stream()
+                                                .map(CategoryServiceModel::getName)
+                                                .collect(Collectors.toList()));
         modelAndView.addObject("model", model);
         modelAndView.addObject("productId", id);
         return view("product/edit-product", modelAndView);
@@ -123,10 +122,11 @@ public class ProductController extends BaseController {
         }
         ProductServiceModel productServiceModel = this.modelMapper.map(model, ProductServiceModel.class);
         productServiceModel.setCategories(model.getCategories()
-                .stream()
-                .map(c -> this.modelMapper
-                        .map(this.categoryService.findCategoryById(c), CategoryServiceModel.class))
-                .collect(Collectors.toList()));
+                                            .stream()
+                                            .map(c -> this.modelMapper
+                                                    .map(this.categoryService.findCategoryById(c),
+                                                            CategoryServiceModel.class))
+                                            .collect(Collectors.toList()));
         this.productService.editProduct(id, productServiceModel);
         return redirect("/products/details/" + id);
     }
@@ -193,7 +193,7 @@ public class ProductController extends BaseController {
 
     @ExceptionHandler({ProductNotFoundException.class})
     public ModelAndView handleProductNotFound(ProductNotFoundException e) {
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("error/error");
         modelAndView.addObject("message", e.getMessage());
         modelAndView.addObject("statusCode", e.getStatusCode());
         return modelAndView;
@@ -201,7 +201,7 @@ public class ProductController extends BaseController {
 
     @ExceptionHandler({ProductNameAlreadyExistsException.class})
     public ModelAndView handleProductNameALreadyExist(ProductNameAlreadyExistsException e) {
-        ModelAndView modelAndView = new ModelAndView("error");
+        ModelAndView modelAndView = new ModelAndView("error/error");
         modelAndView.addObject("message", e.getMessage());
         modelAndView.addObject("statusCode", e.getStatusCode());
         return modelAndView;

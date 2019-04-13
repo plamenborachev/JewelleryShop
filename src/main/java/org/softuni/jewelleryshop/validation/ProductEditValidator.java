@@ -70,6 +70,18 @@ public class ProductEditValidator implements Validator {
                     GlobalConstants.PRICE_POSITIVE_VALIDATION_MESSAGE);
         }
 
+        if (productAddBindingModel.getQuantity() == null) {
+            errors.rejectValue("quantity",
+                    GlobalConstants.QUANTITY_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE,
+                    GlobalConstants.QUANTITY_NOT_NULL_OR_EMPTY_VALIDATION_MESSAGE);
+        }
+
+        if (productAddBindingModel.getQuantity() < 0) {
+            errors.rejectValue("quantity",
+                    GlobalConstants.QUANTITY_POSITIVE_VALIDATION_MESSAGE,
+                    GlobalConstants.QUANTITY_POSITIVE_VALIDATION_MESSAGE);
+        }
+
         if (productAddBindingModel.getCategories() == null
                 || productAddBindingModel.getCategories().isEmpty()) {
             errors.rejectValue("categories",

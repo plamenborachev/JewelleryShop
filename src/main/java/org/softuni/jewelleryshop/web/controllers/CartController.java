@@ -83,7 +83,7 @@ public class CartController extends BaseController {
     @PageTitle("Cart Details")
     public ModelAndView cartDetails(ModelAndView modelAndView, HttpSession session) {
         var cart = this.retrieveCart(session);
-        modelAndView.addObject("totalPrice", this.calcTotal(cart));
+        modelAndView.addObject("totalPrice", this.orderService.calcTotal(cart));
         return view("cart/cart-details", modelAndView);
     }
 
@@ -99,7 +99,7 @@ public class CartController extends BaseController {
     @PreAuthorize("isAuthenticated()")
     public ModelAndView checkoutConfirm(HttpSession session, Principal principal) {
         var cart = this.retrieveCart(session);
-        OrderServiceModel orderServiceModel = this.prepareOrder(cart, principal.getName());
+        OrderServiceModel orderServiceModel = this.orderService.prepareOrder(cart, principal.getName());
 
         if (orderServiceModel.getProducts().isEmpty()){
             throw new IllegalArgumentException(GlobalConstants.CART_EMPTY_EXCEPTION_MESSAGE);
@@ -134,27 +134,5 @@ public class CartController extends BaseController {
         cart.removeIf(ci -> ci.getProduct().getProduct().getId().equals(id));
     }
 
-    private BigDecimal calcTotal(List<ShoppingCartItem> cart) {
-        BigDecimal result = new BigDecimal(0);
-        for (ShoppingCartItem item : cart) {
-            result = result.add(item.getProduct().getPrice().multiply(new BigDecimal(item.getQuantity())));
-        }
-        return result;
-    }
 
-    private OrderServiceModel prepareOrder(List<ShoppingCartItem> cart, String customer) {
-        OrderServiceModel orderServiceModel = new OrderServiceModel();
-        orderServiceModel.setCustomer(this.userService.findUserByUserName(customer));
-        List<OrderProductServiceModel> products = new ArrayList<>();
-        for (ShoppingCartItem item : cart) {
-            OrderProductServiceModel productServiceModel = this.modelMapper.map(item.getProduct(), OrderProductServiceModel.class);
-
-            for (int i = 0; i < item.getQuantity(); i++) {
-                products.add(productServiceModel);
-            }
-        }
-        orderServiceModel.setProducts(products);
-        orderServiceModel.setTotalPrice(this.calcTotal(cart));
-        return orderServiceModel;
-    }
 }

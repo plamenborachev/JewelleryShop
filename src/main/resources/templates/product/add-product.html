@@ -9,63 +9,74 @@
     <th:block th:include="~{fragments/navbar}"></th:block>
 </header>
 <main class="mt-3">
-    <h1 class="text-center font-weight-bolder">Add Jewellery</h1>
-    <hr class="hr-2 bg-dark w-25">
-    <form id="add-product-form" class="form w-25 mx-auto" th:action="@{/products/add}" method="post"
-          th:object="${model}" enctype="multipart/form-data">
-        <input type="hidden" name="_csrf" value="c686cd14-a7f9-4216-8009-c093b7d3df86">
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'text-danger'">
-            <label for="add-product-name" class="font-weight-bold">Name</label>
-            <input type="text" class="form-control" id="add-product-name" name="name" th:field="*{name}">
-            <th:block th:if="${#fields.hasErrors('name')}">
-                <small class="text-danger" th:errors="*{name}"></small>
-            </th:block>
-        </div>
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'text-danger'">
-            <label for="add-product-description" class="font-weight-bold">Description</label>
-            <textarea class="form-control" name="description" id="add-product-description" rows="5"
-                      th:field="*{description}"></textarea>
-            <th:block th:if="${#fields.hasErrors('description')}">
-                <small class="text-danger" th:errors="*{description}"></small>
-            </th:block>
-        </div>
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'text-danger'">
-            <label for="add-product-price" class="font-weight-bold">Price</label>
-            <input type="number" class="form-control text-center" id="add-product-price" name="price"
-                   th:field="*{price}">
-            <th:block th:if="${#fields.hasErrors('price')}">
-                <small class="text-danger" th:errors="*{price}"></small>
-            </th:block>
-        </div>
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('categories')} ? 'text-danger'">
-            <label for="add-product-categories" class="font-weight-bold">Categories</label>
-            <select multiple="" class="form-control" id="add-product-categories" name="categories">
-                <option selected disabled>--- Select Categories ---</option>
-            </select>
-            <th:block th:if="${#fields.hasErrors('categories')}">
-                <small class="text-danger" th:errors="*{categories}"></small>
-            </th:block>
-        </div>
-
-        <div class="form-group" th:classappend="${#fields.hasErrors('image')} ? 'text-danger'">
-            <label for="add-product-image" class="font-weight-bold">Image</label>
-            <input type="file" class="form-control-file" id="add-product-image" name="image"
-                   th:field="*{image}">
-            <th:block th:if="${#fields.hasErrors('image')}">
-                <small class="text-danger" th:errors="*{image}"></small>
-            </th:block>
-        </div>
-
+    <div class="jumbotron bg-light text-center py-3">
+        <h1 class="text-center font-weight-bolder">Add Jewellery</h1>
         <hr class="hr-2 bg-dark w-25">
+        <form id="add-product-form" class="form w-25 mx-auto" th:action="@{/products/add}" method="post"
+              th:object="${model}" enctype="multipart/form-data">
+            <input type="hidden" name="_csrf" value="c686cd14-a7f9-4216-8009-c093b7d3df86">
 
-        <div class="button-holder d-flex justify-content-center">
-            <button type="submit" class="btn btn-secondary">Add Jewellery</button>
-        </div>
-    </form>
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'text-danger'">
+                <label for="add-product-name" class="font-weight-bold">Name</label>
+                <input type="text" class="form-control" id="add-product-name" name="name" th:field="*{name}">
+                <th:block th:if="${#fields.hasErrors('name')}">
+                    <small class="text-danger" th:errors="*{name}"></small>
+                </th:block>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'text-danger'">
+                <label for="add-product-description" class="font-weight-bold">Description</label>
+                <textarea class="form-control" name="description" id="add-product-description" rows="5"
+                          th:field="*{description}"></textarea>
+                <th:block th:if="${#fields.hasErrors('description')}">
+                    <small class="text-danger" th:errors="*{description}"></small>
+                </th:block>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('price')} ? 'text-danger'">
+                <label for="add-product-price" class="font-weight-bold">Price</label>
+                <input type="number" class="form-control text-center" id="add-product-price" name="price"
+                       th:field="*{price}">
+                <th:block th:if="${#fields.hasErrors('price')}">
+                    <small class="text-danger" th:errors="*{price}"></small>
+                </th:block>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('quantity')} ? 'text-danger'">
+                <label for="add-product-quantity" class="font-weight-bold">Quantity</label>
+                <input type="number" step="1" class="form-control text-center"
+                       id="add-product-quantity" name="quantity" th:field="*{quantity}">
+                <th:block th:if="${#fields.hasErrors('quantity')}">
+                    <small class="text-danger" th:errors="*{quantity}"></small>
+                </th:block>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('categories')} ? 'text-danger'">
+                <label for="add-product-categories" class="font-weight-bold">Categories</label>
+                <select multiple="" class="form-control" id="add-product-categories" name="categories">
+                    <option selected disabled>--- Select Categories ---</option>
+                </select>
+                <th:block th:if="${#fields.hasErrors('categories')}">
+                    <small class="text-danger" th:errors="*{categories}"></small>
+                </th:block>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('image')} ? 'text-danger'">
+                <label for="add-product-image" class="font-weight-bold">Image</label>
+                <input type="file" class="form-control-file" id="add-product-image" name="image"
+                       th:field="*{image}">
+                <th:block th:if="${#fields.hasErrors('image')}">
+                    <small class="text-danger" th:errors="*{image}"></small>
+                </th:block>
+            </div>
+
+            <hr class="hr-2 bg-dark w-25">
+
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary">Add Jewellery</button>
+            </div>
+        </form>
+    </div>
 </main>
 <footer class="mt-3">
     <th:block th:include="~{fragments/footer}"></th:block>

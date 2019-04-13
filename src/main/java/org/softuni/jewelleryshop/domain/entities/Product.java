@@ -1,9 +1,5 @@
 package org.softuni.jewelleryshop.domain.entities;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,6 +11,7 @@ public class Product extends BaseEntity {
     private String name;
     private String description;
     private BigDecimal price;
+    private Integer quantity;
     private String imageUrl;
     private List<Category> categories;
 
@@ -46,6 +43,15 @@ public class Product extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Column(name = "quantity", nullable = false)
+    public Integer getQuantity() {
+        return this.quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     @Column(name = "image_url")

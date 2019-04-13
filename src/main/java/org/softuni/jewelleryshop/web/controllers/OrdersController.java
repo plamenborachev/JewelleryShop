@@ -52,7 +52,8 @@ public class OrdersController extends BaseController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PageTitle("Orders Details")
     public ModelAndView allOrderDetails(@PathVariable String id, ModelAndView modelAndView) {
-        OrderViewModel orderViewModel = this.mapper.map(this.orderService.findOrderById(id), OrderViewModel.class);
+        OrderViewModel orderViewModel = this.mapper
+                .map(this.orderService.findOrderById(id), OrderViewModel.class);
         modelAndView.addObject("order", orderViewModel);
 
         return view("order/order-details", modelAndView);

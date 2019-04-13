@@ -14,6 +14,8 @@ public interface ProductService {
 
     ProductServiceModel editProduct(String id, ProductServiceModel productServiceModel);
 
+    ProductServiceModel decreaseProductQuantity(String productId, int value, ProductServiceModel productServiceModel);
+
     void deleteProduct(String id);
 
     List<ProductServiceModel> findAllByCategory(String category);
