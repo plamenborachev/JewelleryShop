@@ -52,7 +52,6 @@ public class ProductServiceImpl implements ProductService {
 
         product = this.modelMapper.map(productServiceModel, Product.class);
         product = this.productRepository.save(product);
-
         return this.modelMapper.map(product, ProductServiceModel.class);
     }
 

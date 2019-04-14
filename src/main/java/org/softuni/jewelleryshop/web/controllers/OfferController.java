@@ -25,14 +25,16 @@ public class OfferController extends BaseController {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public OfferController(OfferService offerService, CategoryService categoryService, ModelMapper modelMapper) {
+    public OfferController(OfferService offerService,
+                           CategoryService categoryService,
+                           ModelMapper modelMapper) {
         this.offerService = offerService;
         this.categoryService = categoryService;
         this.modelMapper = modelMapper;
     }
 
     @GetMapping("/top-offers")
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     @PageTitle("Top Offers")
     public ModelAndView topOffers(ModelAndView modelAndView) {
         List<CategoryViewModel> categories = this.categoryService
