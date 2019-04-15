@@ -1,9 +1,11 @@
 let productDiv = $('.products-data');
+// let fetchUrl = 'http://localhost:8000/fetch/';
+let fetchUrl = 'https://jewellery-shop.herokuapp.com/fetch/';
 
 $(document).ready(function () {
     $('#allRadio').attr('checked', true);
 
-    fetch('http://localhost:8000/fetch/all', { mode: 'no-cors' })
+    fetch(fetchUrl + 'all', { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
             productDiv.empty();
@@ -31,7 +33,7 @@ $(document).ready(function () {
 $('input[type=radio][name=selection]').change(function () {
     let category = $(this).val();
 
-    fetch('http://localhost:8000/fetch/' + category, { mode: 'no-cors' })
+    fetch(fetchUrl + category, { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
             productDiv.empty();
