@@ -3,7 +3,7 @@ let productDiv = $('.products-data');
 $(document).ready(function () {
     $('#allRadio').attr('checked', true);
 
-    fetch('http://localhost:8000/fetch/all')
+    fetch('http://localhost:8000/fetch/all', { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
             productDiv.empty();
@@ -31,7 +31,7 @@ $(document).ready(function () {
 $('input[type=radio][name=selection]').change(function () {
     let category = $(this).val();
 
-    fetch('http://localhost:8000/fetch/' + category)
+    fetch('http://localhost:8000/fetch/' + category, { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
             productDiv.empty();
