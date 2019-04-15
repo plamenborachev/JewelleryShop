@@ -38,13 +38,11 @@
                         && !#lists.contains(user.authorities, 'ROLE_MODERATOR')
                         && !#lists.contains(user.authorities, 'ROLE_ADMIN')}">
                                 <form th:action="@{/users/set-moderator/{id}(id=${user.id})}" method="post">
-                                    <input type="hidden" name="_csrf"
-                                           value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
                                     <button class="btn btn-warning m-1">MODERATOR</button>
                                 </form>
                                 <form th:action="@{/users/set-admin/{id}(id=${user.id})}" method="post">
-                                    <input type="hidden" name="_csrf"
-                                           value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
                                     <button class="btn btn-warning m-1">ADMIN</button>
                                 </form>
                             </th:block>
@@ -53,13 +51,11 @@
                         && #lists.contains(user.authorities, 'ROLE_MODERATOR')
                         && !#lists.contains(user.authorities, 'ROLE_ADMIN')}">
                                 <form th:action="@{/users/set-user/{id}(id=${user.id})}" method="post">
-                                    <input type="hidden" name="_csrf"
-                                           value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
                                     <button class="btn btn-warning m-1">USER</button>
                                 </form>
                                 <form th:action="@{/users/set-admin/{id}(id=${user.id})}" method="post">
-                                    <input type="hidden" name="_csrf"
-                                           value="80417983-fe8b-45c7-963e-31f6915a1560">
+                                    <input type="hidden" name="_csrf" value="80417983-fe8b-45c7-963e-31f6915a1560">
                                     <button class="btn btn-warning m-1">ADMIN</button>
                                 </form>
                             </th:block>

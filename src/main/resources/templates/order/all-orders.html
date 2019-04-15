@@ -34,11 +34,11 @@
                         <div class="text-center">
                             <th:block sec:authorize="hasRole('ROLE_ADMIN')">
                                 <a th:href="@{/orders/all/details/{id}(id=*{id})}"
-                                   class="btn btn-secondary">Jewelleries</a>
+                                   class="btn btn-secondary">Details</a>
                             </th:block>
                             <th:block sec:authorize="!hasRole('ROLE_ADMIN')">
                                 <a th:href="@{/orders/my/details/{id}(id=*{id})}"
-                                   class="btn btn-secondary">Jewelleries</a>
+                                   class="btn btn-secondary">Details</a>
                             </th:block>
                         </div>
 
