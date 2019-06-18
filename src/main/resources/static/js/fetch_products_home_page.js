@@ -1,19 +1,22 @@
 let productDiv = $('.products-data');
 
+// let fetchUrl = 'http://localhost:8000/fetch/';
+let fetchUrl = 'https://jewellery-shop.herokuapp.com/fetch/';
+
 $(document).ready(function () {
     $('#allRadio').attr('checked', true);
 
-    fetch('http://localhost:8000/products/fetch/all')
+    fetch(fetchUrl + 'all', { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
             $('.products-data').empty();
 
 
             if (json.length === 0) {
-                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the ${category} category.</h3>`)
+                productDiv.append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the ${category} category.</h3>`)
             } else {
                 for (let i = 0; i < json.length; i += 3) {
-                    $('.products-data').append('<div class="products-row row d-flex justify-content-around mt-5">');
+                    productDiv.append('<div class="products-row row d-flex justify-content-around mt-5">');
                     if (i < json.length){
                         $('.products-data .products-row:last-child').append(formatProduct(json[i]));
                     }
@@ -31,16 +34,16 @@ $(document).ready(function () {
 $('input[type=radio][name=selection]').change(function () {
     let category = $(this).val();
 
-    fetch('http://localhost:8000/products/fetch/' + category)
+    fetch(fetchUrl + category, { mode: 'no-cors' })
         .then((response) => response.json())
         .then((json) => {
-            $('.products-data').empty();
+            productDiv.empty();
 
             if (json.length === 0) {
-                $('.products-data').append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the "${category}" category.</h3>`)
+                productDiv.append(`<h3 class="text-center font-weight-bold text-danger">There are no jewelleries in the "${category}" category.</h3>`)
             } else {
                 for (let i = 0; i < json.length; i += 3) {
-                    $('.products-data').append('<div class="products-row row d-flex justify-content-around mt-5">');
+                    productDiv.append('<div class="products-row row d-flex justify-content-around mt-5">');
                     if (i < json.length){
                         $('.products-data .products-row:last-child').append(formatProduct(json[i]));
                     }

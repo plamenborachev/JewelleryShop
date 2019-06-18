@@ -23,8 +23,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         "/products/details/**",
                         "/top-offers/**",
                         "/fetch/**",
-                        "/callback/",
-                        "/webjars/**",
+//                        "/callback/",
+//                        "/webjars/**",
                         "/error/**")
                     .permitAll()
                 .antMatchers(
@@ -34,14 +34,16 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                     .anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/home", true)
+                    .formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .loginProcessingUrl("/users/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/")
+                    .logout()
+                        .logoutSuccessUrl("/")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/");

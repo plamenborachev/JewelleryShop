@@ -1,5 +1,6 @@
 let productDiv = $('.products-data');
-// let fetchUrl = 'http://localhost:8000/top-offers/fetch/;
+
+// let fetchUrl = 'http://localhost:8000/top-offers/fetch/';
 let fetchUrl = 'https://jewellery-shop.herokuapp.com/top-offers/fetch/';
 
 $(document).ready(function () {

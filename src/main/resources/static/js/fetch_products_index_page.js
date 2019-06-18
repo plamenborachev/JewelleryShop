@@ -1,4 +1,5 @@
 let productDiv = $('.products-data');
+
 // let fetchUrl = 'http://localhost:8000/fetch/';
 let fetchUrl = 'https://jewellery-shop.herokuapp.com/fetch/';
 
