@@ -38,7 +38,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         .loginPage("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
-//                        .loginProcessingUrl("/users/login")
+                        .loginProcessingUrl("/users/login")
                         .defaultSuccessUrl("/home", true)
                         .permitAll()
                 .and()
