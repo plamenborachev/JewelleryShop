@@ -38,7 +38,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         .loginPage("/users/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .loginProcessingUrl("jewellery-shop.herokuapp.com/users/login")
+//                        .loginProcessingUrl("/users/login")
                         .defaultSuccessUrl("/home", true)
                         .permitAll()
                 .and()
