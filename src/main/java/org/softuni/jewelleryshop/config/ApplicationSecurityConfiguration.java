@@ -35,7 +35,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                        .loginPage("/login")
+                        .loginPage("/users/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .loginProcessingUrl("/users/login")
