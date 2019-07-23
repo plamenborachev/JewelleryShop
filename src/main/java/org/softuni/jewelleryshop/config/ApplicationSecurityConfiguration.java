@@ -35,7 +35,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
-                        .loginPage("/users/login.html")
+                        .loginPage("jewellery-shop.herokuapp.com/users/login.html")
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .loginProcessingUrl("/users/login")
