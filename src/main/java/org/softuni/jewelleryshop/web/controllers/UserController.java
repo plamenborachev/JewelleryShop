@@ -66,7 +66,7 @@ public class UserController extends BaseController {
         return redirect("/users/login");
     }
 
-    @GetMapping("login")
+    @GetMapping("/login")
     @PreAuthorize("isAnonymous()")
     @PageTitle("Login")
     public ModelAndView login() {
@@ -80,7 +80,7 @@ public class UserController extends BaseController {
         modelAndView
                 .addObject("model", this.modelMapper
                         .map(this.userService.findUserByUserName(principal.getName()), UserProfileViewModel.class));
-        return view("/users/profile", modelAndView);
+        return view("users/profile", modelAndView);
     }
 
     @GetMapping("/edit")
