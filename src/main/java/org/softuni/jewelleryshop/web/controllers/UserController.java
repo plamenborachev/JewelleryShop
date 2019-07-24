@@ -66,7 +66,7 @@ public class UserController extends BaseController {
         return redirect("/users/login");
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     @PreAuthorize("isAnonymous()")
     @PageTitle("Login")
     public ModelAndView login() {
