@@ -70,7 +70,7 @@ public class UserController extends BaseController {
     @PreAuthorize("isAnonymous()")
     @PageTitle("Login")
     public ModelAndView login() {
-        return view("/users/login");
+        return view("users/login");
     }
 
     @GetMapping("/profile")
