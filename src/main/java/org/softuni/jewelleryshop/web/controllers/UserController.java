@@ -92,7 +92,7 @@ public class UserController extends BaseController {
         UserServiceModel userServiceModel = this.userService.findUserByUserName(principal.getName());
         model = this.modelMapper.map(userServiceModel, UserEditBindingModel.class);
         modelAndView.addObject("model", model);
-        return view("/users/edit-profile", modelAndView);
+        return view("users/edit-profile", modelAndView);
     }
 
     @PatchMapping("/edit")
@@ -104,7 +104,7 @@ public class UserController extends BaseController {
         this.userEditValidator.validate(model, bindingResult);
         if (bindingResult.hasErrors()) {
             modelAndView.addObject("model", model);
-            return view("/users/edit-profile", modelAndView);
+            return view("users/edit-profile", modelAndView);
         }
         this.userService.editUserProfile(this.modelMapper
                 .map(model, UserServiceModel.class), model.getOldPassword());
@@ -127,7 +127,7 @@ public class UserController extends BaseController {
                 })
                 .collect(Collectors.toList());
         modelAndView.addObject("users", users);
-        return view("/users/all-users", modelAndView);
+        return view("users/all-users", modelAndView);
     }
 
     @PostMapping("/set-user/{id}")
