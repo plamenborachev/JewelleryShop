@@ -54,7 +54,7 @@ public class HomeController extends BaseController {
                 .map(category -> this.modelMapper.map(category, CategoryViewModel.class))
                 .collect(Collectors.toList());
         modelAndView.addObject("categories", categories);
-        return view("/users/home", modelAndView);
+        return view("users/home", modelAndView);
     }
 
     @GetMapping("/fetch/{category}")
