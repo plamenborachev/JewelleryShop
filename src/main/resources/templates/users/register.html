@@ -19,7 +19,7 @@
 
             <div class="form-group" th:classappend="${#fields.hasErrors('username')} ? 'text-danger'">
                 <label for="username" class="font-weight-bold">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username..." name="username"
+                <input type="text" class="form-control" id="username" name="username"
                        th:field="*{username}">
                 <th:block th:if="${#fields.hasErrors('username')}">
                     <small class="text-danger" th:errors="*{username}"></small>
@@ -28,7 +28,7 @@
 
             <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'text-danger'">
                 <label for="password" class="font-weight-bold">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password..." name="password"
+                <input type="password" class="form-control" id="password" name="password"
                        th:field="*{password}">
                 <th:block th:if="${#fields.hasErrors('password')}">
                     <small class="text-danger" th:errors="*{password}"></small>
@@ -37,7 +37,7 @@
 
             <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'text-danger'">
                 <label for="confirmPassword" class="font-weight-bold">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password..."
+                <input type="password" class="form-control" id="confirmPassword"
                        name="confirmPassword" th:field="*{confirmPassword}">
                 <th:block th:if="${#fields.hasErrors('confirmPassword')}">
                     <small class="text-danger" th:errors="*{confirmPassword}"></small>
@@ -46,7 +46,7 @@
 
             <div class="form-group" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'text-danger'">
                 <label for="email" class="font-weight-bold">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email..." name="email"
+                <input type="email" class="form-control" id="email" name="email"
                        th:field="*{email}">
                 <th:block th:if="${#fields.hasErrors('email')}">
                     <small class="text-danger" th:errors="*{email}"></small>

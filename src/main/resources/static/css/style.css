@@ -38,6 +38,10 @@ nav li{
     z-index: 9999 !important;
 }
 
+h1, .h1 {
+    font-size: 4.5rem;
+}
+
 /*.demo {*/
 /*    margin: 0 auto;*/
 /*    padding-top: 64px;*/
